@@ -5,7 +5,7 @@ export const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
         name: 'main',
-        component: () => import('./index.vue')
+        component: () => import('./login')
     }
 ]
 
