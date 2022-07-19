@@ -1,11 +1,9 @@
 <template>
-$END$
+  <h2>It's a quiz page</h2>
 </template>
 
-<script>
-export default {
-name: "index.vue"
-}
+<script setup lang="scss">
+
 </script>
 
 <style scoped>

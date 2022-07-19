@@ -1,13 +1,16 @@
 <template>
-    <div class="app">
-        <Routing />
-    </div>
+  <div class="app">
+    <Routing />
+  </div>
 </template>
 
 <script setup lang="ts">
-    import { Routing } from '@/pages';
+import { Routing } from '@/pages';
 </script>
 
-<style scoped>
-
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
 </style>
