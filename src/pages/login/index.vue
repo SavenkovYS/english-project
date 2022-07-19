@@ -1,10 +1,11 @@
 <template>
-  <page-header />
-  <h1>I am here</h1>
+  <page-layout>
+    <h1>I am here</h1>
+  </page-layout>
 </template>
 
 <script setup lang="ts">
-import PageHeader from '@/widgets/header/index.vue';
+import PageLayout from '@/widgets/layout/index.vue';
 </script>
 
 <style lang="scss" scoped>

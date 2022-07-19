@@ -62,14 +62,13 @@ const actions = reactive([
         }
 
         &__navigation-link {
-            color: #000;
-            font-weight: 700;
+            color: #fff;
 
             text-decoration: none;
         }
 
         &__navigation-link:hover {
-            color: rgba(0, 0, 0, 0.7)
+            color: rgba(255, 255, 255, 0.7)
         }
     }
 </style>
