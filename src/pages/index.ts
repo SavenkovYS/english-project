@@ -5,6 +5,11 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'main',
+    redirect: '/login',
+  },
+  {
+    path: '/login',
+    name: 'login',
     component: () => import('./login/index.vue'),
   },
   {
