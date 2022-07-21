@@ -2,15 +2,16 @@
   <page-layout>
     <section class="login">
       <base-card
-        class="login-view__card"
+        class="login__card"
         width="450px"
+        padding="0"
       >
-        <header class="login-view__header">
-          <h1 class="login-view__title">
+        <header class="login__header">
+          <h1 class="login__title">
             Вход
           </h1>
         </header>
-        <form>
+        <form class="login__form">
           <base-text-input
             :id="formConfig.userName.id"
             input-size="250px"
@@ -32,6 +33,14 @@
             :type="formConfig.password.type"
             is-horizontal
           />
+          <div class="login__controls">
+            <base-button
+              type="button"
+              variant="primary"
+            >
+              Войти
+            </base-button>
+          </div>
         </form>
       </base-card>
     </section>
@@ -40,6 +49,7 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue';
+import BaseButton from '@/shared/design/BaseButton.vue';
 import BaseCard from '@/shared/design/BaseCard.vue';
 import BaseTextInput from '@/shared/design/formElements/BaseTextInput.vue';
 import PageLayout from '@/widgets/layout/index.vue';
@@ -63,6 +73,36 @@ const formConfig = reactive({
 
 <style lang="scss" scoped>
     .login {
+        padding-top: 100px;
+
+        &__header {
+            padding: 20px;
+
+            color: #fff;
+            text-align: center;
+
+            border-bottom: 1px solid #4CAF50;
+            background-color: #4CAF50;
+        }
+
+        &__title {
+            font-size: 1.5rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin: 0;
+
+            text-transform: uppercase;
+        }
+
+        &__form {
+            padding: 20px;
+        }
+
+        &__controls {
+            display: flex;
+            justify-content: flex-end;
+        }
+
         &__field:not(:last-child) {
             margin-bottom: 20px;
         }

@@ -12,5 +12,9 @@ import { Routing } from '@/pages';
     body {
         margin: 0;
         padding: 0;
+
+        font-size: 0.875rem;
+
+        font-family: Arial;
     }
 </style>

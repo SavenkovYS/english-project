@@ -11,19 +11,20 @@
 import { computed } from 'vue';
 
 interface Props {
-    width?: string
+    padding?: string;
+    width?: string;
 }
-const { width = '300px' } = defineProps<Props>();
+const { padding = '20px', width = '300px' } = defineProps<Props>();
 
 const cardStyles = computed(() => ({
   width,
+  padding,
 }));
 </script>
 
 <style lang="scss" scoped>
     .base-card {
         margin: 0 auto;
-        padding: 20px;
         box-sizing: border-box;
 
         box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
