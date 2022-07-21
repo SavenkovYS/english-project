@@ -1,24 +1,38 @@
 <template>
   <page-layout>
     <section class="login">
-      <base-card class="login-view__card">
+      <base-card
+        class="login-view__card"
+        width="450px"
+      >
         <header class="login-view__header">
           <h1 class="login-view__title">
-            <base-text-input
-              :id="formConfig.userName.id"
-              :label="formConfig.userName.label"
-              :name="formConfig.userName.name"
-              :type="formConfig.userName.type"
-            />
-            <base-text-input
-              :id="formConfig.password.id"
-              :label="formConfig.password.label"
-              :name="formConfig.password.name"
-              :type="formConfig.password.type"
-            />
+            Вход
           </h1>
         </header>
-        <form />
+        <form>
+          <base-text-input
+            :id="formConfig.userName.id"
+            input-size="250px"
+            class="login__field"
+            placeholder="Логин"
+            :label="formConfig.userName.label"
+            :name="formConfig.userName.name"
+            :type="formConfig.userName.type"
+
+            is-horizontal
+          />
+          <base-text-input
+            :id="formConfig.password.id"
+            input-size="250px"
+            class="login__field"
+            placeholder="Пароль"
+            :label="formConfig.password.label"
+            :name="formConfig.password.name"
+            :type="formConfig.password.type"
+            is-horizontal
+          />
+        </form>
       </base-card>
     </section>
   </page-layout>
@@ -48,5 +62,9 @@ const formConfig = reactive({
 </script>
 
 <style lang="scss" scoped>
-
+    .login {
+        &__field:not(:last-child) {
+            margin-bottom: 20px;
+        }
+    }
 </style>
