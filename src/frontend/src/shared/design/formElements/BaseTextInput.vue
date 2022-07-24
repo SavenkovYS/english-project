@@ -12,6 +12,7 @@
       :placeholder="placeholder"
       :style="inputStyles"
       :type="type"
+      v-model="value"
     >
   </field-wrapper>
 </template>
@@ -23,21 +24,42 @@ import FieldWrapper from '@/shared/design/formElements/FieldWrapper.vue';
 interface Props {
     type: string;
 
-    id?: string | number;
-    inputSize?: string,
+    id?: string;
+    inputSize?: string;
     isHorizontal?: boolean;
     label?: string;
-    labelSize?: string
+    labelSize?: string;
     name?: string;
     placeholder?: string;
-}
+    modelValue?: string;
+};
+
+const emit = defineEmits<{
+  (event: 'update:modelValue', value: string): void
+}>();
 
 const inputStyles = computed(() => ({
   width: inputSize,
 }));
+const value = computed({
+  get() {
+    return modelValue;
+  },
+  set(value) {
+    emit('update:modelValue', value);
+  }
+});
 
 const {
-  type, id = '', inputSize = '100%', isHorizontal = false, label = '', labelSize = 'max-content', name = '', placeholder = '',
+  type, 
+  id = '', 
+  inputSize = '100%', 
+  isHorizontal = false, 
+  label = '', 
+  labelSize = 'max-content',
+  name = '', 
+  placeholder = '', 
+  modelValue = ''
 } = defineProps<Props>();
 
 </script>
