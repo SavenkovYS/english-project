@@ -17,6 +17,11 @@ export const routes: Array<RouteRecordRaw> = [
     name: 'quiz',
     component: () => import('./quiz/index.vue'),
   },
+  {
+    path: '/registration',
+    name: 'registration',
+    component: () => import('./registration/index.vue'),
+  },
 ];
 
 export { Routing };

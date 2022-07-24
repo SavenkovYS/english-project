@@ -1,0 +1,37 @@
+version: '2.4'
+
+services:
+  quiz:
+    build:
+      context: .
+      target: dev
+    ports:
+      - "8000:3000"
+      - "9229:9229"
+    volumes:
+      - .:/app
+    networks:
+      - backend
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:10.1
+    ports:
+      - "5434:5432"
+    volumes:
+      - quiz:/var/lib/postgresql/data
+    networks:
+      - backend
+    env_file:
+      - ./docker.local.env
+    healthcheck:
+      test: pg_isready -U postgres -h 127.0.0.1
+
+volumes:
+  quiz:
+    external: true
+
+networks:
+  backend:
