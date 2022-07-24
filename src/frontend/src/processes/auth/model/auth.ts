@@ -1,21 +1,18 @@
+import { defineStore } from 'pinia';
+
+import { IUser, IAuthProps } from '@/shared/api/auth/model';
+import { tryLogin } from '@/shared/api/auth';
+
 export const NAMESPACE = 'auth';
 
-export const module = {
-    namespaced: true,
-    state: {
-        user: null
-    },
-    getters: {
-        user: state => state.user
-    },
-    mutations: {
-        SET_USER(state, user) {
-            state.user = user;
-        }
-    },
+export const useAuth = defineStore('auth', {
+    state: () => ({
+        user: {} as IUser
+    }),
     actions: {
-        setUser({ commit }, user) {
-            commit('SET_USER', user);
+        async login({ login, password }: IAuthProps) {
+            const response = await tryLogin({ login, password }); 
+            console.log('[response]', response);
         }
     }
-};
+});

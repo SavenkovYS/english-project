@@ -20,7 +20,7 @@
             :label="formConfig.userName.label"
             :name="formConfig.userName.name"
             :type="formConfig.userName.type"
-
+            v-model="formConfig.userName.value"
             is-horizontal
           />
           <base-text-input
@@ -31,6 +31,7 @@
             :label="formConfig.password.label"
             :name="formConfig.password.name"
             :type="formConfig.password.type"
+            v-model="formConfig.password.value"
             is-horizontal
           />
           <div class="login__registration-link-container">
@@ -41,6 +42,7 @@
             <base-button
               type="button"
               variant="primary"
+              @click="tryLogin"
             >
               Войти
             </base-button>
@@ -53,7 +55,10 @@
 
 <script lang="ts">
 import { reactive } from 'vue';
+
 import { routesNames } from '@/pages/config';
+import { useAuth } from '@/processes/auth/model/auth';
+
 import BaseButton from '@/shared/design/BaseButton.vue';
 import BaseCard from '@/shared/design/BaseCard.vue';
 import BaseTextInput from '@/shared/design/formElements/BaseTextInput.vue';
@@ -65,6 +70,7 @@ export default {
 </script>
 
 <script setup lang="ts">
+const auth = useAuth();
 
 
 const formConfig = reactive({
@@ -73,14 +79,27 @@ const formConfig = reactive({
     label: 'Имя пользователя',
     name: 'userName',
     type: 'text',
+    value: ''
   },
   password: {
     id: 'password',
     label: 'Пароль',
     name: 'password',
     type: 'password',
+    value: ''
   },
 });
+
+async function tryLogin() {
+  try {
+    await auth.login({ 
+      login: formConfig.userName.value, 
+      password: formConfig.password.value 
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 </script>
 
