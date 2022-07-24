@@ -1,24 +1,24 @@
 <template>
   <page-layout>
-    <section class="resistration">
+    <section class="registration">
       <base-card
-        class="resistration__card"
+        class="registration__card"
         width="450px"
         padding="0"
       >
-        <header class="resistration__header">
-          <h1 class="resistration__title">
+        <header class="registration__header">
+          <h1 class="registration__title">
             Регистрация
           </h1>
         </header>
         <form
-          class="resistration__form"
+          class="registration__form"
           @submit.prevent
         >
           <base-text-input
             :id="formConfig.userName.id"
             input-size="250px"
-            class="resistration__field"
+            class="registration__field"
             placeholder="Логин"
             :label="formConfig.userName.label"
             :name="formConfig.userName.name"
@@ -29,14 +29,18 @@
           <base-text-input
             :id="formConfig.password.id"
             input-size="250px"
-            class="resistration__field"
+            class="registration__field"
             placeholder="Пароль"
             :label="formConfig.password.label"
             :name="formConfig.password.name"
             :type="formConfig.password.type"
             is-horizontal
           />
-          <div class="resistration__controls">
+          <div class="registration__login-link-container">
+            <span>Уже есть аккаунт?</span>
+            <router-link class="registration__login-link" :to="{ name: routesNames.login }">Войти</router-link>
+          </div>
+          <div class="registration__controls">
             <base-button
               class="registration__submit-button"
               type="submit"
@@ -53,6 +57,7 @@
 
 <script lang="ts">
 import { reactive } from 'vue';
+import { routesNames } from '@/pages/config';
 import BaseButton from '@/shared/design/BaseButton.vue';
 import BaseCard from '@/shared/design/BaseCard.vue';
 import BaseTextInput from '@/shared/design/formElements/BaseTextInput.vue';
@@ -82,7 +87,7 @@ const formConfig = reactive({
 </script>
 
 <style lang="scss" scoped>
-.resistration {
+.registration {
     padding-top: 100px;
 
     &__header {
@@ -109,17 +114,35 @@ const formConfig = reactive({
     }
 
     &__controls {
-         display: flex;
-         justify-content: center;
+        display: flex;
+        justify-content: center;
     }
 
-    &__controls button {
-      width: 100%;
+
+    &__login-link-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    &__login-link {
+      margin-left: 5px;
+
+      color: rgb(59, 68, 246);
+      text-decoration: none;
+    }
+
+    &__login-link:hover,
+    &__login-link:focus {
+      color: rgba(59, 68, 246, 0.8);
+    }
+
+    &__login-link:active {
+      color: rgba(59, 68, 246, 0.5);
     }
 
     &__submit-button {
       width: 100%;
-      background-color: red;
     }
 
     &__field:not(:last-child) {

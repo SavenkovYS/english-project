@@ -33,6 +33,10 @@
             :type="formConfig.password.type"
             is-horizontal
           />
+          <div class="login__registration-link-container">
+            <span>Нет аккаунта?</span>
+            <router-link class="login__registration-link" :to="{ name: routesNames.registration }">Зарегистрируйтесь</router-link>
+          </div>
           <div class="login__controls">
             <base-button
               type="button"
@@ -47,12 +51,21 @@
   </page-layout>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import { reactive } from 'vue';
+import { routesNames } from '@/pages/config';
 import BaseButton from '@/shared/design/BaseButton.vue';
 import BaseCard from '@/shared/design/BaseCard.vue';
 import BaseTextInput from '@/shared/design/formElements/BaseTextInput.vue';
 import PageLayout from '@/widgets/layout/index.vue';
+
+export default {
+  name: 'LoginView'
+}
+</script>
+
+<script setup lang="ts">
+
 
 const formConfig = reactive({
   userName: {
@@ -96,6 +109,28 @@ const formConfig = reactive({
 
         &__form {
             padding: 20px;
+        }
+
+        &__registration-link-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        &__registration-link {
+          margin-left: 5px;
+
+          color: rgb(59, 68, 246);
+          text-decoration: none;
+        }
+
+        &__registration-link:hover,
+        &__registration-link:focus {
+          color: rgba(59, 68, 246, 0.8);
+        }
+
+        &__registration-link:active {
+          color: rgba(59, 68, 246, 0.5);
         }
 
         &__controls {
