@@ -20,6 +20,7 @@ export async function signupUser(req: Request, res: Response, next: NextFunction
 }
 
 export async function login(req: Request, res: Response, next: NextFunction) {
+    console.log(1)
     try {
         const { login, password } = req.body;
         const userData = await userService.login(login, password);

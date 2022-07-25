@@ -16,12 +16,12 @@ app.use(express.json());
 app.use(express.urlencoded())
 app.use(cors({
     credentials: true,
-    origin: process.env.CLIENT_URL
+    origin: 'http://localhost:5000'
 }));
 app.use(cookieParser());
 
 // app.use((req: Request, res: Response, next: NextFunction) => {
-//     res.setHeader('Access-Control-Allow-Origin', '*');
+//     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5000');
 //     res.setHeader(
 //         'Access-Control-Allow-Methods',
 //         'OPTIONS, GET, POST, PUT, PATCH, DELETE'
