@@ -11,9 +11,12 @@
             Регистрация
           </h1>
         </header>
+        <div v-if="errorMessage" class="registration__error-block">
+          <p class="registration__error">{{ errorMessage }}</p>
+        </div>
         <form
           class="registration__form"
-          @submit.prevent
+          @submit.prevent="registerUser"
         >
           <base-text-input
             :id="formConfig.userName.id"
@@ -23,7 +26,7 @@
             :label="formConfig.userName.label"
             :name="formConfig.userName.name"
             :type="formConfig.userName.type"
-
+            v-model="formConfig.userName.value"
             is-horizontal
           />
           <base-text-input
@@ -34,6 +37,7 @@
             :label="formConfig.password.label"
             :name="formConfig.password.name"
             :type="formConfig.password.type"
+            v-model="formConfig.password.value"
             is-horizontal
           />
           <div class="registration__login-link-container">
@@ -56,19 +60,26 @@
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
+
 import { routesNames } from '@/pages/config';
+import { useAuth } from '@/processes/auth/model/auth';
+import { getErrorMessage } from '@/shared/api/lib';
+
 import BaseButton from '@/shared/design/BaseButton.vue';
 import BaseCard from '@/shared/design/BaseCard.vue';
 import BaseTextInput from '@/shared/design/formElements/BaseTextInput.vue';
 import PageLayout from '@/widgets/layout/index.vue';
+import { AxiosError } from 'axios';
+
 
 export default {
-  name: 'RegistrationPage',
+  name: 'RegistrationPage'
 };
 </script>
 
 <script setup lang="ts">
+const auth = useAuth();
 
 const formConfig = reactive({
   userName: {
@@ -76,14 +87,31 @@ const formConfig = reactive({
     label: 'Имя пользователя',
     name: 'userName',
     type: 'text',
+    value: ''
   },
   password: {
     id: 'password',
     label: 'Пароль',
     name: 'password',
     type: 'password',
-  },
+    value: ''
+  }
 });
+
+let errorMessage = ref('')
+
+async function registerUser() {
+  try {
+    await auth.registerUser({ login: formConfig.userName.value, password: formConfig.password.value });
+  } catch (error) {
+    
+    if (error instanceof AxiosError) {
+      console.log(error.response)
+      errorMessage.value = getErrorMessage(error, 'Произошла ошибка при входе. Повторите попытку позже')
+    }
+  }
+  
+}
 </script>
 
 <style lang="scss" scoped>
@@ -98,6 +126,19 @@ const formConfig = reactive({
 
          border-bottom: 1px solid #4CAF50;
          background-color: #4CAF50;
+    }
+
+    &__error-block {
+      padding: 0 10px;
+    }
+
+    &__error {
+      padding: 10px;
+
+      color: #fff;
+
+      background-color: rgb(223, 26, 26);
+      border-radius: 3px;
     }
 
     &__title {
