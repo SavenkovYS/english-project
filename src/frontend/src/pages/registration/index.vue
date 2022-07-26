@@ -60,6 +60,12 @@
 </template>
 
 <script lang="ts">
+export default {
+  name: 'RegistrationPage'
+};
+</script>
+
+<script setup lang="ts">
 import { reactive, ref } from 'vue';
 
 import { routesNames } from '@/pages/config';
@@ -71,14 +77,8 @@ import BaseCard from '@/shared/design/BaseCard.vue';
 import BaseTextInput from '@/shared/design/formElements/BaseTextInput.vue';
 import PageLayout from '@/widgets/layout/index.vue';
 import { AxiosError } from 'axios';
+import { router } from "@/app/providers";
 
-
-export default {
-  name: 'RegistrationPage'
-};
-</script>
-
-<script setup lang="ts">
 const auth = useAuth();
 
 const formConfig = reactive({
@@ -103,8 +103,8 @@ let errorMessage = ref('')
 async function registerUser() {
   try {
     await auth.registerUser({ login: formConfig.userName.value, password: formConfig.password.value });
+    await router.push({ name: routesNames.quiz });
   } catch (error) {
-    
     if (error instanceof AxiosError) {
       console.log(error.response)
       errorMessage.value = getErrorMessage(error, 'Произошла ошибка при входе. Повторите попытку позже')
