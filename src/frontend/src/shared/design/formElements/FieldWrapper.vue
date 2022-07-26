@@ -10,6 +10,9 @@
       :style="labelStyles"
     >{{ label }}</label>
     <slot />
+    <div class="field-wrapper__errors-container" v-if="shouldShowErrors">
+      <p class="field-wrapper__error" v-for="error in errors" :key="error">{{ error }}</p>
+    </div>
   </fieldset>
 </template>
 
@@ -17,13 +20,20 @@
 import { computed } from 'vue';
 
 interface Props {
-    id?: string | number;
-    isHorizontal?: boolean;
-    label?: string;
-    labelSize?: string;
+  errors?: string[];
+  id?: string;
+  isHorizontal?: boolean;
+  label?: string;
+  labelSize?: string;
+  shouldShowErrors?: boolean;
 }
 const {
-  id = '', isHorizontal = false, label = '', labelSize = 'max-content',
+  errors = [],
+  id = '', 
+  isHorizontal = false, 
+  label = '', 
+  labelSize = 'max-content',
+  shouldShowErrors = false
 } = defineProps<Props>();
 
 const labelStyles = computed(() => ({

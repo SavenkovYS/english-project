@@ -4,10 +4,13 @@
     :is-horizontal="isHorizontal"
     :label="label"
     :label-size="labelSize"
+    :errors="errors"
+    :should-show-errors="shouldShowErrors"
   >
     <input
       :id="id"
       class="base-input"
+      :class="{'base-input--error': shouldShowErrors}"
       :name="name"
       :placeholder="placeholder"
       :style="inputStyles"
@@ -18,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import FieldWrapper from '@/shared/design/formElements/FieldWrapper.vue';
 
 interface Props {
@@ -32,15 +35,24 @@ interface Props {
     name?: string;
     placeholder?: string;
     modelValue?: string;
+    submitted?: boolean;
 };
 
 const emit = defineEmits<{
   (event: 'update:modelValue', value: string): void
 }>();
 
+const errors = reactive([]);
+const hideErrors = ref(true);
+
+const shouldShowErrors = computed(() => {
+  return submitted && !hideErrors;
+});
+
 const inputStyles = computed(() => ({
   width: inputSize,
 }));
+
 const value = computed({
   get() {
     return modelValue;
@@ -59,7 +71,8 @@ const {
   labelSize = 'max-content',
   name = '', 
   placeholder = '', 
-  modelValue = ''
+  modelValue = '',
+  submitted = false
 } = defineProps<Props>();
 
 </script>
@@ -76,7 +89,11 @@ const {
 
     &:hover,
     &:focus {
-        border-color: green;
+        border-color: #4CAF50;
+    }
+
+    &--error {
+      border-color: rgb(223, 26, 26);
     }
 }
 </style>
