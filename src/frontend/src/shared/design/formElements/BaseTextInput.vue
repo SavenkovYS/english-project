@@ -44,6 +44,7 @@ interface Props {
 }
 
 const emit = defineEmits<{(event: 'update:modelValue', value: string): void
+  (event: 'set-field-validity', fieldValidity: boolean): void
 }>();
 
 const {
@@ -62,8 +63,9 @@ const {
 
 const errors: string[] = reactive([]);
 const hideErrors = ref(false);
+const isFieldValid = ref(true);
 
-const shouldShowErrors = computed(() => submitted && !hideErrors.value && errors.length > 0);
+const shouldShowErrors = computed(() => submitted && !hideErrors.value && isFieldValid.value);
 
 const inputStyles = computed(() => ({
   width: inputSize,
@@ -81,6 +83,12 @@ const fieldValue = computed({
 function validateField() {
   const fieldErrors = getFieldErrors(fieldValue.value, validationRules);
   Object.assign(errors, fieldErrors);
+  if (fieldErrors.length > 0) {
+    isFieldValid.value = false;
+  } else {
+    isFieldValid.value = true;
+  }
+  emit('set-field-validity', isFieldValid);
 }
 
 function handleInputBlur() {
@@ -96,6 +104,7 @@ onBeforeMount(() => {
 
 <style lang="scss" scoped>
 .base-input {
+    box-sizing: border-box;
     padding: 7px 10px;
 
     border: 1px solid #333;

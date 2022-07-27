@@ -3,26 +3,29 @@
     class="field-wrapper"
     :class="{ 'field-wrapper--horizontal': isHorizontal }"
   >
-    <label
-      class="field-wrapper__label"
-      :class="{ 'field-wrapper__label--horizontal': isHorizontal }"
-      :for="id"
-      :style="labelStyles"
-    >{{ label }}</label>
-    <slot />
-  </fieldset>
-  <div
-    v-if="shouldShowErrors"
-    class="field-wrapper__errors-container"
-  >
-    <p
-      v-for="error in errors"
-      :key="error"
-      class="field-wrapper__error"
+    <div class="field-wrapper__input-container">
+      <label
+        class="field-wrapper__label"
+        :class="{ 'field-wrapper__label--horizontal': isHorizontal }"
+        :for="id"
+        :style="labelStyles"
+      >{{ label }}</label>
+      <slot />
+    </div>
+
+    <div
+      v-if="shouldShowErrors"
+      class="field-wrapper__errors-container"
     >
-      {{ error }}
-    </p>
-  </div>
+      <p
+        v-for="error in errors"
+        :key="error"
+        class="field-wrapper__error"
+      >
+        {{ error }}
+      </p>
+    </div>
+  </fieldset>
 </template>
 
 <script setup lang="ts">
@@ -52,15 +55,17 @@ const labelStyles = computed(() => ({
 
 <style lang="scss" scoped>
 .field-wrapper {
-  display: flex;
-  flex-direction: column;
-
   margin: 0;
   padding: 0;
 
   border: none;
 
-  &--horizontal {
+  &__input-container {
+      display: flex;
+      flex-direction: column;
+  }
+
+  &__input-container--horizontal {
       flex-direction: row;
       align-items: center;
       justify-content: space-between;

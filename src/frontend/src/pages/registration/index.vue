@@ -26,28 +26,24 @@
           <base-text-input
             :id="formConfig.userName.id"
             v-model="formConfig.userName.value"
-            input-size="250px"
+            input-size="100%"
             class="registration__field"
             placeholder="Логин"
-            :label="formConfig.userName.label"
             :name="formConfig.userName.name"
             :type="formConfig.userName.type"
             :validation-rules="formConfig.userName.validationRules"
             submitted
-            is-horizontal
           />
           <base-text-input
             :id="formConfig.password.id"
             v-model="formConfig.password.value"
-            input-size="250px"
+            input-size="100%"
             class="registration__field"
             placeholder="Пароль"
-            :label="formConfig.password.label"
             :name="formConfig.password.name"
             :type="formConfig.password.type"
             :validation-rules="formConfig.password.validationRules"
             submitted
-            is-horizontal
           />
           <div class="registration__login-link-container">
             <span>Уже есть аккаунт?</span>
@@ -132,7 +128,7 @@ async function registerUser() {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .registration {
     padding-top: 100px;
 
@@ -204,7 +200,7 @@ async function registerUser() {
     }
 
     &__field:not(:last-child) {
-         margin-bottom: 20px;
+         margin-bottom: 10px;
     }
 }
 </style>
