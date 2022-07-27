@@ -16,7 +16,7 @@ module.exports = {
   rules: {
     'linebreak-style': 0,
     'class-methods-use-this': 0,
-    'vue/no-setup-props-destructure': off,
+    'vue/no-setup-props-destructure': 0,
     'max-len': [
       'error',
       {

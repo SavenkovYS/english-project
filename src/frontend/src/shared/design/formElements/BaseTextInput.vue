@@ -9,20 +9,24 @@
   >
     <input
       :id="id"
+      v-model="fieldValue"
       class="base-input"
       :class="{'base-input--error': shouldShowErrors}"
       :name="name"
       :placeholder="placeholder"
       :style="inputStyles"
       :type="type"
-      v-model="value"
+      @blur="handleInputBlur"
     >
   </field-wrapper>
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue';
+import {
+  computed, reactive, ref, onBeforeMount,
+} from 'vue';
 import FieldWrapper from '@/shared/design/formElements/FieldWrapper.vue';
+import { getFieldErrors, IValidationRules } from '@/shared/design/formElements/lib';
 
 interface Props {
     type: string;
@@ -36,44 +40,57 @@ interface Props {
     placeholder?: string;
     modelValue?: string;
     submitted?: boolean;
-};
+    validationRules?: IValidationRules
+}
 
-const emit = defineEmits<{
-  (event: 'update:modelValue', value: string): void
+const emit = defineEmits<{(event: 'update:modelValue', value: string): void
 }>();
 
-const errors = reactive([]);
-const hideErrors = ref(true);
+const {
+  type,
+  id = '',
+  inputSize = '100%',
+  isHorizontal = false,
+  label = '',
+  labelSize = 'max-content',
+  name = '',
+  placeholder = '',
+  modelValue = '',
+  submitted = false,
+  validationRules = {},
+} = defineProps<Props>();
 
-const shouldShowErrors = computed(() => {
-  return submitted && !hideErrors;
-});
+const errors: string[] = reactive([]);
+const hideErrors = ref(false);
+
+const shouldShowErrors = computed(() => submitted && !hideErrors.value && errors.length > 0);
 
 const inputStyles = computed(() => ({
   width: inputSize,
 }));
 
-const value = computed({
+const fieldValue = computed({
   get() {
     return modelValue;
   },
-  set(value) {
-    emit('update:modelValue', value);
-  }
+  set(newValue) {
+    emit('update:modelValue', newValue);
+  },
 });
 
-const {
-  type, 
-  id = '', 
-  inputSize = '100%', 
-  isHorizontal = false, 
-  label = '', 
-  labelSize = 'max-content',
-  name = '', 
-  placeholder = '', 
-  modelValue = '',
-  submitted = false
-} = defineProps<Props>();
+function validateField() {
+  const fieldErrors = getFieldErrors(fieldValue.value, validationRules);
+  Object.assign(errors, fieldErrors);
+}
+
+function handleInputBlur() {
+  validateField();
+  hideErrors.value = false;
+}
+
+onBeforeMount(() => {
+  validateField();
+});
 
 </script>
 

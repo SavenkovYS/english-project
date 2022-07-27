@@ -10,10 +10,19 @@
       :style="labelStyles"
     >{{ label }}</label>
     <slot />
-    <div class="field-wrapper__errors-container" v-if="shouldShowErrors">
-      <p class="field-wrapper__error" v-for="error in errors" :key="error">{{ error }}</p>
-    </div>
   </fieldset>
+  <div
+    v-if="shouldShowErrors"
+    class="field-wrapper__errors-container"
+  >
+    <p
+      v-for="error in errors"
+      :key="error"
+      class="field-wrapper__error"
+    >
+      {{ error }}
+    </p>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -29,11 +38,11 @@ interface Props {
 }
 const {
   errors = [],
-  id = '', 
-  isHorizontal = false, 
-  label = '', 
+  id = '',
+  isHorizontal = false,
+  label = '',
   labelSize = 'max-content',
-  shouldShowErrors = false
+  shouldShowErrors = false,
 } = defineProps<Props>();
 
 const labelStyles = computed(() => ({
@@ -43,27 +52,34 @@ const labelStyles = computed(() => ({
 
 <style lang="scss" scoped>
 .field-wrapper {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 
-    border: none;
+  border: none;
 
-    &--horizontal {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-    }
+  &--horizontal {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+  }
 
-    &__label {
-        margin-bottom: 5px;
-    }
+  &__label {
+      margin-bottom: 5px;
+  }
 
-    &__label--horizontal {
-        margin-bottom: 0;
-        margin-right: 5px;
-    }
+  &__label--horizontal {
+      margin-bottom: 0;
+      margin-right: 5px;
+  }
+
+  &__error {
+    margin-top: 3px;
+    margin-bottom: 0;
+
+    color: rgb(223, 26, 26);
+  }
 }
 </style>
