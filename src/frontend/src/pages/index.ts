@@ -23,6 +23,11 @@ export const routes: Array<RouteRecordRaw> = [
     name: routesNames.registration,
     component: () => import('./registration/index.vue'),
   },
+  {
+    path: '/quiz/questions',
+    name: routesNames.questions,
+    component: () => import('./quiz/questions/index.vue'),
+  },
 ];
 
 export { Routing };

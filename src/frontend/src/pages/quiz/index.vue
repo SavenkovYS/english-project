@@ -14,7 +14,10 @@
               Желаю успехов!
             </p>
           </div>
-          <base-button class="quiz-page__start-button">
+          <base-button
+            class="quiz-page__start-button"
+            @click="startQuiz"
+          >
             Начать!
           </base-button>
         </base-card>
@@ -24,9 +27,18 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
+import { routesNames } from '@/pages/config';
+
 import PageLayout from '@/widgets/layout/index.vue';
 import BaseCard from '@/shared/design/BaseCard.vue';
 import BaseButton from '@/shared/design/BaseButton.vue';
+
+const router = useRouter();
+
+function startQuiz() {
+  router.push({ name: routesNames.questions });
+}
 
 </script>
 
