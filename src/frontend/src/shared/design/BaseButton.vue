@@ -2,17 +2,20 @@
   <button
     class="base-button"
     :class="'base-button--' + variant"
+    :disabled="disabled"
   >
     <slot />
   </button>
 </template>
 
 <script setup lang="ts">
+
 interface Props {
-    variant?: string
+  disabled?: boolean;
+  variant?: string;
 }
 
-const { variant = 'primary' } = defineProps<Props>();
+const { disabled = false, variant = 'primary' } = defineProps<Props>();
 </script>
 
 <style lang="scss" scoped>
@@ -38,5 +41,10 @@ const { variant = 'primary' } = defineProps<Props>();
         border-color: #77C27A;
         background-color: #77C27A;
     }
+
+  &:disabled {
+    background-color: rgb(76, 175, 80, 0.7);
+    cursor: not-allowed;
+  }
 }
 </style>

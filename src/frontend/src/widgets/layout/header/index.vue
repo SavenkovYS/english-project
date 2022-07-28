@@ -5,8 +5,11 @@
         English Quiz
       </p>
     </div>
-    <navigation class="page-header__navigation">
-      <ul class="page-header__navigation-list">
+    <nav class="page-header__navigation">
+      <ul
+        v-if="auth.isLoggedIn"
+        class="page-header__navigation-list"
+      >
         <li
           v-for="action in actions"
           :key="action.id"
@@ -20,12 +23,13 @@
           </router-link>
         </li>
       </ul>
-    </navigation>
+    </nav>
   </header>
 </template>
 
 <script setup lang="ts">
 import { reactive } from 'vue';
+import { useAuth } from '@/processes/auth/model/auth';
 
 const actions = reactive([
   {
@@ -34,6 +38,8 @@ const actions = reactive([
     link: 'quiz',
   },
 ]);
+
+const auth = useAuth();
 </script>
 
 <style lang="scss" scoped>

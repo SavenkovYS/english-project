@@ -61,8 +61,10 @@
               class="registration__submit-button"
               type="submit"
               variant="primary"
+              :disabled="isFetching"
             >
-              Зарегистрироваться
+              <loading-spinner v-if="isFetching" />
+              <span v-else>Зарегистрироваться</span>
             </base-button>
           </div>
         </form>
@@ -83,9 +85,11 @@ import BaseButton from '@/shared/design/BaseButton.vue';
 import BaseCard from '@/shared/design/BaseCard.vue';
 import BaseTextInput from '@/shared/design/formElements/BaseTextInput.vue';
 import PageLayout from '@/widgets/layout/index.vue';
-import { router } from '@/app/providers';
+import { useRouter } from 'vue-router';
+import LoadingSpinner from '@/shared/design/UI/LoadingSpinner.vue';
 
 const auth = useAuth();
+const router = useRouter();
 
 const formConfig = reactive({
   userName: {
@@ -113,6 +117,10 @@ const formConfig = reactive({
         param: true,
         message: 'Пароль обязателен',
       },
+      minLength: {
+        param: 3,
+        message: 'Пароль не может быть меньше 3 символов',
+      },
     },
     isValid: true,
   },
@@ -134,7 +142,6 @@ async function registerUser() {
   }
 
   isFetching.value = true;
-  errorMessage.value = '';
 
   try {
     await auth.registerUser({ login: formConfig.userName.value, password: formConfig.password.value });
@@ -170,6 +177,7 @@ async function registerUser() {
 
     &__error {
       padding: 10px;
+      margin-bottom: 0;
 
       color: #fff;
 
