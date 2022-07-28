@@ -65,7 +65,7 @@ const errors: string[] = reactive([]);
 const hideErrors = ref(false);
 const isFieldValid = ref(true);
 
-const shouldShowErrors = computed(() => submitted && !hideErrors.value && isFieldValid.value);
+const shouldShowErrors = computed(() => submitted && !hideErrors.value && !isFieldValid.value);
 
 const inputStyles = computed(() => ({
   width: inputSize,
@@ -88,7 +88,7 @@ function validateField() {
   } else {
     isFieldValid.value = true;
   }
-  emit('set-field-validity', isFieldValid);
+  emit('set-field-validity', isFieldValid.value);
 }
 
 function handleInputBlur() {

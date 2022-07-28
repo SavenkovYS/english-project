@@ -32,7 +32,8 @@
             :name="formConfig.userName.name"
             :type="formConfig.userName.type"
             :validation-rules="formConfig.userName.validationRules"
-            submitted
+            :submitted="submitted"
+            @set-field-validity="formConfig.userName.isValid = $event"
           />
           <base-text-input
             :id="formConfig.password.id"
@@ -43,7 +44,8 @@
             :name="formConfig.password.name"
             :type="formConfig.password.type"
             :validation-rules="formConfig.password.validationRules"
-            submitted
+            :submitted="submitted"
+            @set-field-validity="formConfig.password.isValid = $event"
           />
           <div class="registration__login-link-container">
             <span>Уже есть аккаунт?</span>
@@ -98,6 +100,7 @@ const formConfig = reactive({
         message: 'Имя пользователя обязательно',
       },
     },
+    isValid: true,
   },
   password: {
     id: 'password',
@@ -111,12 +114,28 @@ const formConfig = reactive({
         message: 'Пароль обязателен',
       },
     },
+    isValid: true,
   },
 });
 
 const errorMessage = ref('');
+const submitted = ref(false);
+const isFetching = ref(false);
+
+function checkFormValidity() {
+  return Object.values(formConfig).every((field) => field.isValid);
+}
 
 async function registerUser() {
+  submitted.value = true;
+
+  if (!checkFormValidity()) {
+    return;
+  }
+
+  isFetching.value = true;
+  errorMessage.value = '';
+
   try {
     await auth.registerUser({ login: formConfig.userName.value, password: formConfig.password.value });
     await router.push({ name: routesNames.quiz });
@@ -124,8 +143,11 @@ async function registerUser() {
     if (error instanceof AxiosError) {
       errorMessage.value = getErrorMessage(error, 'Произошла ошибка при входе. Повторите попытку позже');
     }
+  } finally {
+    isFetching.value = false;
   }
 }
+
 </script>
 
 <style lang="scss">
