@@ -11,17 +11,20 @@ export const useAuth = defineStore('auth', {
   state: () => ({
     user: {} as IUser,
     isLoggedIn: false,
+    accessToken: null,
   }),
   actions: {
     async login({ login, password }: IAuthProps) {
       const response = await tryLogin({ login, password });
       this.user = response.data.user;
       this.isLoggedIn = true;
+      this.accessToken = response.data.accessToken;
     },
     async registerUser({ login, password }: IAuthProps) {
       const response = await registerUser({ login, password });
       this.user = response.data.user;
       this.isLoggedIn = true;
+      this.accessToken = response.data.accessToken;
     },
     async logout() {
       this.user = {} as IUser;
