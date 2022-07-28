@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia';
+import Cookies from 'ts-cookies';
 
 import { IUser, IAuthProps } from '@/shared/api/auth/model';
 import { registerUser, tryLogin } from '@/shared/api/auth';
+import { routesNames } from '@/pages/config';
 
 export const NAMESPACE = 'auth';
 
@@ -19,6 +21,20 @@ export const useAuth = defineStore('auth', {
       const response = await registerUser({ login, password });
       this.user = response.data.user;
       this.isLoggedIn = true;
+    },
+    async logout() {
+      this.user = {} as IUser;
+      this.isLoggedIn = false;
+      if (Cookies.get('accessToken')) {
+        Cookies.remove('accessToken');
+      }
+      if (Cookies.get('refreshToken')) {
+        Cookies.remove('refreshToken');
+      }
+
+      console.log(1);
+
+      await this.router.push({ name: routesNames.login });
     },
   },
 });
