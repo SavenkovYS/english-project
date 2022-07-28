@@ -24,6 +24,7 @@
         </li>
       </ul>
       <base-button
+        v-if="auth.isLoggedIn"
         class="page-header__logout-button"
         variant="link"
         @click="logoutUser"
@@ -67,6 +68,7 @@ async function logoutUser() {
 
   &__logo {
     margin: 0;
+    width: max-content;
 
     color: #fff;
     font-size: 1.25rem;

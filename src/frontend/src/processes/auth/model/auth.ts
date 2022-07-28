@@ -15,7 +15,8 @@ export const useAuth = defineStore('auth', {
   actions: {
     async login({ login, password }: IAuthProps) {
       const response = await tryLogin({ login, password });
-      console.log('[response]', response);
+      this.user = response.data.user;
+      this.isLoggedIn = true;
     },
     async registerUser({ login, password }: IAuthProps) {
       const response = await registerUser({ login, password });
@@ -31,8 +32,6 @@ export const useAuth = defineStore('auth', {
       if (Cookies.get('refreshToken')) {
         Cookies.remove('refreshToken');
       }
-
-      console.log(1);
 
       await this.router.push({ name: routesNames.login });
     },
