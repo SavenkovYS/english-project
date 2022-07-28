@@ -6,6 +6,16 @@
 
 <script setup lang="ts">
 import { Routing } from '@/pages';
+import { onBeforeMount } from 'vue';
+import { useAuth } from '@/processes/auth/model/auth';
+
+const auth = useAuth();
+
+onBeforeMount(() => {
+  if (localStorage.getItem('accessToken')) {
+    auth.checkAuth();
+  }
+});
 </script>
 
 <style>
