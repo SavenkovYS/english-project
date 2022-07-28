@@ -11,30 +11,27 @@ export const useAuth = defineStore('auth', {
   state: () => ({
     user: {} as IUser,
     isLoggedIn: false,
-    accessToken: null,
   }),
   actions: {
     async login({ login, password }: IAuthProps) {
       const response = await tryLogin({ login, password });
+      localStorage.setItem('accessToken', response.data.accessToken);
       this.user = response.data.user;
       this.isLoggedIn = true;
-      this.accessToken = response.data.accessToken;
     },
     async registerUser({ login, password }: IAuthProps) {
       const response = await registerUser({ login, password });
+      localStorage.setItem('accessToken', response.data.accessToken);
       this.user = response.data.user;
       this.isLoggedIn = true;
-      this.accessToken = response.data.accessToken;
     },
     async logout() {
       this.user = {} as IUser;
       this.isLoggedIn = false;
-      if (Cookies.get('accessToken')) {
-        Cookies.remove('accessToken');
-      }
       if (Cookies.get('refreshToken')) {
         Cookies.remove('refreshToken');
       }
+      localStorage.removeItem('accessToken');
 
       await this.router.push({ name: routesNames.login });
     },
