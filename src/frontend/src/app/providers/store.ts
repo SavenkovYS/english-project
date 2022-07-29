@@ -1,5 +1,5 @@
 import { createPinia } from 'pinia';
-import { router } from '@/app/providers/router';
+import router from '@/app/providers/router';
 import { markRaw } from 'vue';
 import { Router } from 'vue-router';
 
