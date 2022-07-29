@@ -12,9 +12,12 @@
       <p class="question-card__options-container">
         <base-radio
           v-for="answer in question.answers"
+          :id="String(answer.value)"
           :key="answer.value"
           :label="answer.label"
+          :model-value="String(answer.value)"
           class="question-card__answer"
+          @update:modelValue="$emit('update-user-answer')"
         />
       </p>
       <slot name="next" />

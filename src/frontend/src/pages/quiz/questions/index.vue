@@ -10,6 +10,7 @@
         <question-card
           v-else
           :question="currentQuestion"
+          @update-user-answer="updateUserAnswer"
         >
           <template #title>
             Вопрос {{ questionNumber }}
@@ -57,6 +58,10 @@ async function getQuestions() {
   } finally {
     areQuestionsLoading.value = false;
   }
+}
+
+function updateUserAnswer(value: string) {
+  console.log('[value]', value);
 }
 
 onBeforeMount(() => {
