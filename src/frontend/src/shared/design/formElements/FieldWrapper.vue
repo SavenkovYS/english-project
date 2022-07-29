@@ -3,7 +3,10 @@
     class="field-wrapper"
     :class="{ 'field-wrapper--horizontal': isHorizontal }"
   >
-    <div class="field-wrapper__input-container">
+    <div
+      class="field-wrapper__input-container"
+      :class="{ 'field-wrapper__input-container--horizontal': isHorizontal }"
+    >
       <label
         class="field-wrapper__label"
         :class="{ 'field-wrapper__label--horizontal': isHorizontal }"
@@ -12,7 +15,6 @@
       >{{ label }}</label>
       <slot />
     </div>
-
     <div
       v-if="shouldShowErrors"
       class="field-wrapper__errors-container"
@@ -66,9 +68,9 @@ const labelStyles = computed(() => ({
   }
 
   &__input-container--horizontal {
-      flex-direction: row;
+      flex-direction: row-reverse;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
   }
 
   &__label {
@@ -77,7 +79,7 @@ const labelStyles = computed(() => ({
 
   &__label--horizontal {
       margin-bottom: 0;
-      margin-right: 5px;
+      margin-left: 5px;
   }
 
   &__error {

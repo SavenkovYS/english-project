@@ -1,10 +1,10 @@
 <template>
   <div
-    class="lds-dual-ring"
+    class="loader"
     :style="{ width: `${size}px`, height: `${size}px` }"
   >
     <div
-      class="lds-dual-ring-after"
+      class="loader-after"
       :style="[computedStyles]"
     />
   </div>
@@ -15,9 +15,9 @@
 import { computed } from 'vue';
 
 interface Props {
-  size: number;
-  color: string;
-  duration: string;
+  size?: number;
+  color?: string;
+  duration?: string;
 }
 
 const { color = '#4CAF50', size = 80, duration = '1.2s' } = defineProps<Props>();
@@ -31,7 +31,7 @@ const computedStyles = computed(() => ({
 </script>
 
 <style scoped>
-.lds-dual-ring-after {
+.loader-after {
   content: ' ';
   display: block;
   /* ratio: calc(64px / 80px) */
@@ -42,11 +42,11 @@ const computedStyles = computed(() => ({
   border-radius: 50%;
   border: 6px solid #000;
   border-color: #000 transparent #000 transparent;
-  animation-name: lds-dual-ring;
+  animation-name: loader;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
-@keyframes lds-dual-ring {
+@keyframes loader {
   0% {
     transform: rotate(0deg);
   }

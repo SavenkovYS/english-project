@@ -1,41 +1,60 @@
 <template>
-  <base-card
-    width="800px"
-  >
-    <loading-spinner
-      v-if="isFetching"
-      size="60"
-      class="question-card__loader"
-    />
+  <div>
     <div
-      v-else
       class="question-card__container"
     >
       <h2 class="question-card__title">
         <slot name="title" />
       </h2>
       <p class="question-card__text">
-        <slot name="text" />
+        {{ question.body }}
       </p>
+      <p class="question-card__options-container">
+        <base-radio
+          v-for="answer in question.answers"
+          :key="answer.value"
+          :label="answer.label"
+          class="question-card__answer"
+        />
+      </p>
+      <slot name="next" />
     </div>
-  </base-card>
+  </div>
 </template>
 
 <script setup lang="ts">
-import BaseCard from '@/shared/design/BaseCard.vue';
-import LoadingSpinner from '@/shared/design/UI/LoadingSpinner.vue';
+import BaseRadio from '@/shared/design/formElements/BaseRadio.vue';
+import { IQuestion } from '@/shared/api/question/model';
 
 interface Props {
-  isFetching: boolean
+  question: IQuestion;
 }
 
-const { isFetching = false } = defineProps<Props>();
+const { question } = defineProps<Props>();
 </script>
 
 <style lang="scss" scoped>
   .question-card {
-    &__loader {
-      margin: 0 auto;
+    &__title {
+      margin-top: 0;
+
+      font-size: 22px;
+    }
+
+    &__text {
+      font-size: 18px;
+    }
+
+    &__options-container {
+      margin-bottom: 20px;
+    }
+
+    &__answer {
+      font-size: 16px;
+    }
+
+    &__answer:not(:last-child) {
+      margin-bottom: 10px;
     }
   }
 </style>
