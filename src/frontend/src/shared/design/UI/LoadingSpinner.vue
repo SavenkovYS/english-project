@@ -1,28 +1,50 @@
 <template>
-  <div class="loader">
-    <slot />
+  <div
+    class="lds-dual-ring"
+    :style="{ width: `${size}px`, height: `${size}px` }"
+  >
+    <div
+      class="lds-dual-ring-after"
+      :style="[computedStyles]"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 
+import { computed } from 'vue';
+
+interface Props {
+  size: number;
+  color: string;
+  duration: string;
+}
+
+const { color = '#4CAF50', size = 80, duration = '1.2s' } = defineProps<Props>();
+
+const computedStyles = computed(() => ({
+  borderWidth: `${size * 0.075}px`,
+  animationDuration: duration,
+  borderColor: `${color} transparent`,
+}));
+
 </script>
 
 <style scoped>
-.loader {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-}
-.loader:after {
-  content: " ";
+.lds-dual-ring-after {
+  content: ' ';
   display: block;
-  width: 8px;
-  height: 8px;
+  /* ratio: calc(64px / 80px) */
+  width: 80%;
+  height: 80%;
+  /* ratio: calc(8px / 80px) */
+  margin: 10%;
   border-radius: 50%;
-  border: 3px solid #fff;
-  border-color: #fff transparent #fff transparent;
-  animation: lds-dual-ring 1.2s linear infinite;
+  border: 6px solid #000;
+  border-color: #000 transparent #000 transparent;
+  animation-name: lds-dual-ring;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 @keyframes lds-dual-ring {
   0% {
