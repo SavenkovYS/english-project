@@ -14,13 +14,18 @@
           v-for="answer in question.answers"
           :id="String(answer.value)"
           :key="answer.value"
+          v-model="selectedAnswer"
           :label="answer.label"
-          :model-value="String(answer.value)"
+          :value="String(answer.value)"
           class="question-card__answer"
-          @update:modelValue="$emit('update-user-answer')"
         />
       </p>
-      <slot name="next" />
+      <base-button
+        class="quiz-questions__next-button"
+        @click="goToNextQuestion"
+      >
+        Следующий вопрос
+      </base-button>
     </div>
   </div>
 </template>
@@ -28,12 +33,23 @@
 <script setup lang="ts">
 import BaseRadio from '@/shared/design/formElements/BaseRadio.vue';
 import { IQuestion } from '@/shared/api/question/model';
+import { ref } from 'vue';
+import BaseButton from '@/shared/design/BaseButton.vue';
 
 interface Props {
   question: IQuestion;
 }
 
 const { question } = defineProps<Props>();
+const emit = defineEmits<{(event: 'go-to-next-question', value: string): void}>();
+
+const selectedAnswer = ref('');
+
+function goToNextQuestion() {
+  emit('go-to-next-question', selectedAnswer.value);
+  selectedAnswer.value = '';
+}
+
 </script>
 
 <style lang="scss" scoped>

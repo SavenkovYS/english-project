@@ -1,12 +1,13 @@
 <template>
   <field-wrapper
+    :id="id"
     is-horizontal
     :label="label"
   >
     <input
       :id="id"
       v-model="fieldValue"
-      :value="fieldValue"
+      :value="value"
       type="radio"
     >
   </field-wrapper>
@@ -17,13 +18,16 @@ import FieldWrapper from '@/shared/design/formElements/FieldWrapper.vue';
 import { computed, defineEmits } from 'vue';
 
 interface Props {
-  id: string,
-  modelValue: string,
+  id: string;
+  modelValue: string;
+  value: string;
 
   label?: string;
 }
 
-const { id, modelValue, label = '' } = defineProps<Props>();
+const {
+  id, modelValue, value, label = '',
+} = defineProps<Props>();
 
 const emit = defineEmits<{(event: 'update:modelValue', value: string): void }>();
 

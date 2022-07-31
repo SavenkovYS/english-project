@@ -30,8 +30,8 @@ instance.interceptors.response.use(
         const response = await axios.get(`${API_URL}/auth/refresh`, { withCredentials: true });
         localStorage.setItem('accessToken', response.data.accessToken);
         return instance.request(originalRequest);
-      } catch (error) {
-        console.log(error);
+      } catch (responseError) {
+        console.log(responseError);
       }
     }
     throw error;

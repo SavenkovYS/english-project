@@ -10,15 +10,10 @@
         <question-card
           v-else
           :question="currentQuestion"
-          @update-user-answer="updateUserAnswer"
+          @go-to-next-question="goToNextQuestion"
         >
           <template #title>
             Вопрос {{ questionNumber }}
-          </template>
-          <template #next>
-            <base-button class="quiz-questions__next-button">
-              Следующий вопрос
-            </base-button>
           </template>
         </question-card>
       </base-card>
@@ -43,6 +38,7 @@ const questions: IQuestion[] = reactive([]);
 const areQuestionsLoading = ref(false);
 const currentQuestionIndex = ref(0);
 const loadingError = ref(null);
+const userResults = reactive([]);
 
 const questionNumber = computed(() => currentQuestionIndex.value + 1);
 const currentQuestion = computed(() => questions[currentQuestionIndex.value]);
@@ -52,7 +48,6 @@ async function getQuestions() {
   try {
     const response = await fetchQuestions();
     Object.assign(questions, response.data);
-    console.log(response);
   } catch (error) {
     loadingError.value = getErrorMessage(error, 'Произошла ошибка при загрузке!');
   } finally {
@@ -60,8 +55,12 @@ async function getQuestions() {
   }
 }
 
-function updateUserAnswer(value: string) {
-  console.log('[value]', value);
+function goToNextQuestion(userAnswerValue: string) {
+  userResults.push({
+    currentQuestion: currentQuestion.value,
+    userAnswerValue,
+  });
+  currentQuestionIndex.value++;
 }
 
 onBeforeMount(() => {
