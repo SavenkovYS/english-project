@@ -63,8 +63,13 @@
               variant="primary"
               :disabled="isFetching"
             >
-              <loading-spinner v-if="isFetching" />
-              <span v-else>Войти</span>
+              <span>Войти</span>
+              <loading-spinner
+                v-if="isFetching"
+                class="login__submit-spinner"
+                :size="14"
+                color="#fff"
+              />
             </base-button>
           </div>
         </form>
@@ -227,6 +232,15 @@ async function tryLogin() {
 
   &__field:not(:last-child) {
     margin-bottom: 10px;
+  }
+
+  &__submit-button {
+    display: flex;
+    align-items: center;
+  }
+
+  &__submit-spinner {
+    margin-left: 4px;
   }
 }
 </style>

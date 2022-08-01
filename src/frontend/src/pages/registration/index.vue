@@ -63,8 +63,13 @@
               variant="primary"
               :disabled="isFetching"
             >
-              <loading-spinner v-if="isFetching" />
-              <span v-else>Зарегистрироваться</span>
+              <span>Зарегистрироваться</span>
+              <loading-spinner
+                v-if="isFetching"
+                class="registration__submit-spinner"
+                :size="14"
+                color="#fff"
+              />
             </base-button>
           </div>
         </form>
@@ -231,6 +236,16 @@ async function registerUser() {
 
     &__field:not(:last-child) {
          margin-bottom: 10px;
+    }
+
+    &__submit-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__submit-spinner {
+      margin-left: 4px;
     }
 }
 </style>
