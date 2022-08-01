@@ -15,7 +15,7 @@
 
 <script lang="ts" setup>
 import FieldWrapper from '@/shared/design/formElements/FieldWrapper.vue';
-import { computed, defineEmits } from 'vue';
+import { computed } from 'vue';
 
 interface Props {
   id: string;
