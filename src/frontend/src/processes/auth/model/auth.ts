@@ -38,10 +38,14 @@ export const useAuth = defineStore('auth', {
       await this.router.push({ name: routesNames.login });
     },
     async checkAuth() {
-      const response = await axios.get(`${API_URL}/user/refresh`, { withCredentials: true });
-      localStorage.setItem('accessToken', response.data.accessToken);
-      this.user = response.data.user;
-      this.isLoggedIn = true;
+      try {
+        const response = await axios.get(`${API_URL}/user/refresh`, { withCredentials: true });
+        localStorage.setItem('accessToken', response.data.accessToken);
+        this.user = response.data.user;
+        this.isLoggedIn = true;
+      } catch {
+        this.logout();
+      }
     },
   },
 });

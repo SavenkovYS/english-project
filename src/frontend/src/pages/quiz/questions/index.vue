@@ -38,7 +38,7 @@ const questions: IQuestion[] = reactive([]);
 const areQuestionsLoading = ref(false);
 const currentQuestionIndex = ref(0);
 const loadingError = ref(null);
-const userResults = reactive([]);
+const userResults: any[] = reactive([]);
 
 const questionNumber = computed(() => currentQuestionIndex.value + 1);
 const currentQuestion = computed(() => questions[currentQuestionIndex.value]);
@@ -60,7 +60,7 @@ function goToNextQuestion(userAnswerValue: string) {
     currentQuestion: currentQuestion.value,
     userAnswerValue,
   });
-  currentQuestionIndex.value++;
+  currentQuestionIndex.value += 1;
 }
 
 onBeforeMount(() => {

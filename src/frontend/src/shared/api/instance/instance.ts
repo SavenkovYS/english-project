@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useAuth } from '@/processes/auth/model/auth';
 
 export const API_URL = 'http://localhost:8000';
 
@@ -33,8 +34,10 @@ instance.interceptors.response.use(
       } catch (responseError) {
         console.log(responseError);
       }
+    } else {
+      const auth = useAuth();
+      auth.logout();
     }
-    throw error;
   },
 );
 
