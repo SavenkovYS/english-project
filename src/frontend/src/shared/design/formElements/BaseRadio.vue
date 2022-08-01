@@ -29,7 +29,7 @@ const {
   id, modelValue, value, label = '',
 } = defineProps<Props>();
 
-const emit = defineEmits<{(event: 'update:modelValue', value: string): void }>();
+const emit = defineEmits<{(event: 'update:modelValue', inputValue: string): void }>();
 
 const fieldValue = computed({
   get() {
