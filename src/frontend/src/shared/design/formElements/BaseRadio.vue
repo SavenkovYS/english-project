@@ -7,6 +7,7 @@
     <input
       :id="id"
       v-model="fieldValue"
+      class="base-radio__input"
       :value="value"
       type="radio"
     >
@@ -42,6 +43,10 @@ const fieldValue = computed({
 
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.base-radio {
+  &__input {
+    margin: 0;
+  }
+}
 </style>

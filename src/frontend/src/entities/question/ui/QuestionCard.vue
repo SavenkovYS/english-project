@@ -22,6 +22,7 @@
       </p>
       <base-button
         class="quiz-questions__next-button"
+        :disabled="!selectedAnswer"
         @click="goToNextQuestion"
       >
         Следующий вопрос
@@ -46,8 +47,10 @@ const emit = defineEmits<{(event: 'go-to-next-question', value: string): void}>(
 const selectedAnswer = ref('');
 
 function goToNextQuestion() {
-  emit('go-to-next-question', selectedAnswer.value);
-  selectedAnswer.value = '';
+  if (selectedAnswer.value) {
+    emit('go-to-next-question', selectedAnswer.value);
+    selectedAnswer.value = '';
+  }
 }
 
 </script>

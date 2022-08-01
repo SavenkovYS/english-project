@@ -8,7 +8,7 @@
           class="quiz-questions__loader"
         />
         <question-card
-          v-else
+          v-else-if="!showResults"
           :question="currentQuestion"
           @go-to-next-question="goToNextQuestion"
         >
@@ -16,6 +16,10 @@
             Вопрос {{ questionNumber }}
           </template>
         </question-card>
+        <quiz-result
+          v-else
+          :results="userResults"
+        />
       </base-card>
     </section>
   </page-layout>
@@ -24,24 +28,27 @@
 <script setup lang="ts">
 import PageLayout from '@/widgets/layout/index.vue';
 import QuestionCard from '@/entities/question/ui/QuestionCard.vue';
+import QuizResult from '@/entities/result/ui/QuizResult.vue';
 import {
   computed, onBeforeMount, reactive, ref,
 } from 'vue';
 import { fetchQuestions } from '@/shared/api/question';
-import BaseButton from '@/shared/design/BaseButton.vue';
 import { getErrorMessage } from '@/shared/api/lib';
 import BaseCard from '@/shared/design/BaseCard.vue';
 import LoadingSpinner from '@/shared/design/UI/LoadingSpinner.vue';
 import { IQuestion } from '@/shared/api/question/model';
+import { IQuizAnswer } from '@/pages/quiz/questions/model';
 
 const questions: IQuestion[] = reactive([]);
 const areQuestionsLoading = ref(false);
 const currentQuestionIndex = ref(0);
 const loadingError = ref(null);
-const userResults: any[] = reactive([]);
+const userResults: IQuizAnswer[] = reactive([]);
+const showResults = ref(false);
 
 const questionNumber = computed(() => currentQuestionIndex.value + 1);
 const currentQuestion = computed(() => questions[currentQuestionIndex.value]);
+const isLastQuestion = computed(() => currentQuestionIndex.value === questions.length - 1);
 
 async function getQuestions() {
   areQuestionsLoading.value = true;
@@ -57,10 +64,14 @@ async function getQuestions() {
 
 function goToNextQuestion(userAnswerValue: string) {
   userResults.push({
-    currentQuestion: currentQuestion.value,
+    question: currentQuestion.value,
     userAnswerValue,
   });
-  currentQuestionIndex.value += 1;
+  if (isLastQuestion.value) {
+    showResults.value = true;
+  } else {
+    currentQuestionIndex.value += 1;
+  }
 }
 
 onBeforeMount(() => {
