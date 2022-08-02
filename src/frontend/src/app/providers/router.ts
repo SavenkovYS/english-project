@@ -22,6 +22,9 @@ router.beforeEach(async (to, from, next) => {
     await auth.checkAuth();
   }
 
+  console.log('[auth.isLoggedIn]', auth.isLoggedIn);
+  console.log('[isRouteAuth]', isRouteAuth);
+
   if (auth.isLoggedIn && isRouteAuth) {
     next({ name: routesNames.quiz });
   }

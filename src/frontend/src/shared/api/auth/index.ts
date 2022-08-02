@@ -1,5 +1,5 @@
 import instance from '@/shared/api/instance/instance';
-import { IAuthProps, IUser } from '@/shared/api/auth/model';
+import { IAuthProps } from '@/shared/api/auth/model';
 
 export function tryLogin({ password, login }: IAuthProps) {
   const body = {
@@ -17,4 +17,8 @@ export function registerUser({ password, login }: IAuthProps) {
   };
 
   return instance.post('/user/signup-user', body);
+}
+
+export function logoutUser() {
+  return instance.post('user/logout');
 }

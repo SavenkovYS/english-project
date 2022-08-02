@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import Cookies from 'ts-cookies';
 
 import { IUser, IAuthProps } from '@/shared/api/auth/model';
-import { registerUser, tryLogin } from '@/shared/api/auth';
+import { logoutUser, registerUser, tryLogin } from '@/shared/api/auth';
 import { routesNames } from '@/pages/config';
 import axios from 'axios';
 import { API_URL } from '@/shared/api/instance/instance';
@@ -30,9 +30,12 @@ export const useAuth = defineStore('auth', {
     async logout() {
       this.user = {} as IUser;
       this.isLoggedIn = false;
-      if (Cookies.get('refreshToken')) {
-        Cookies.remove('refreshToken');
+      try {
+        await logoutUser();
+      } catch (error) {
+        console.log(error);
       }
+
       localStorage.removeItem('accessToken');
 
       await this.router.push({ name: routesNames.login });
@@ -43,8 +46,11 @@ export const useAuth = defineStore('auth', {
         localStorage.setItem('accessToken', response.data.accessToken);
         this.user = response.data.user;
         this.isLoggedIn = true;
-      } catch {
-        this.logout();
+      } catch (error) {
+        console.log(error);
+        this.user = {} as IUser;
+        this.isLoggedIn = false;
+        await this.router.push({ name: routesNames.login });
       }
     },
   },
