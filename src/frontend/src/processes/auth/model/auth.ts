@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import Cookies from 'ts-cookies';
 
 import { IUser, IAuthProps } from '@/shared/api/auth/model';
 import { logoutUser, registerUser, tryLogin } from '@/shared/api/auth';
@@ -41,17 +40,10 @@ export const useAuth = defineStore('auth', {
       await this.router.push({ name: routesNames.login });
     },
     async checkAuth() {
-      try {
-        const response = await axios.get(`${API_URL}/user/refresh`, { withCredentials: true });
-        localStorage.setItem('accessToken', response.data.accessToken);
-        this.user = response.data.user;
-        this.isLoggedIn = true;
-      } catch (error) {
-        console.log(error);
-        this.user = {} as IUser;
-        this.isLoggedIn = false;
-        await this.router.push({ name: routesNames.login });
-      }
+      const response = await axios.get(`${API_URL}/user/refresh`, { withCredentials: true });
+      localStorage.setItem('accessToken', response.data.accessToken);
+      this.user = response.data.user;
+      this.isLoggedIn = true;
     },
   },
 });

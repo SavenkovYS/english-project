@@ -1,6 +1,6 @@
 <template>
   <h2 class="quiz-result__title">
-    Ваш результат
+    Ваш результат - <span class="quiz-result__score">{{ rightAnswersNumber }}/{{ totalQuestionsNumber }}</span>
   </h2>
   <ul class="quiz-result__questions-list">
     <quiz-result-item
@@ -9,17 +9,39 @@
       :result="result"
     />
   </ul>
+  <div class="quiz-result__controls">
+    <base-button
+      class="quiz-result__restart-button"
+      @click="restartQuiz"
+    >
+      Начать заново
+    </base-button>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { IQuizAnswer } from '@/pages/quiz/questions/model';
 import QuizResultItem from '@/entities/result/ui/QuizResultItem.vue';
+import BaseButton from '@/shared/design/BaseButton.vue';
+import { computed } from 'vue';
 
-  interface Props {
-    results: IQuizAnswer[]
-  }
+interface Props {
+  results: IQuizAnswer[];
+}
 
 const { results } = defineProps<Props>();
+const emit = defineEmits<{(event: 'restart-quiz'): void}>();
+
+const totalQuestionsNumber = computed(() => results.length);
+
+const rightAnswersNumber = computed(() => results.filter((result: IQuizAnswer) => {
+  const userAnswer = result.question.answers.find((answer) => String(answer.value) === result.userAnswerValue);
+  return userAnswer.right;
+}).length);
+
+function restartQuiz() {
+  emit('restart-quiz');
+}
 </script>
 
 <style lang="scss" scoped>
@@ -28,11 +50,21 @@ const { results } = defineProps<Props>();
     margin-top: 0;
   }
 
+  &__score {
+    font-size: 24px;
+    color: blue;
+  }
+
   &__questions-list {
     margin: 0;
     padding: 0;
 
     list-style: none;
+  }
+
+  &__controls {
+    display: flex;
+    justify-content: flex-end;
   }
 }
 </style>

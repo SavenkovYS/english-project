@@ -1,5 +1,5 @@
 import { RouteRecordRaw } from 'vue-router';
-import { checkAuth, routesNames } from './config';
+import { routesNames } from './config';
 import Routing from './index.vue';
 
 export const routes: Array<RouteRecordRaw> = [
@@ -12,7 +12,6 @@ export const routes: Array<RouteRecordRaw> = [
     path: '/login',
     name: routesNames.login,
     component: () => import('./login/index.vue'),
-    beforeEnter: checkAuth,
   },
   {
     path: '/quiz',
@@ -23,7 +22,6 @@ export const routes: Array<RouteRecordRaw> = [
     path: '/registration',
     name: routesNames.registration,
     component: () => import('./registration/index.vue'),
-    beforeEnter: checkAuth,
   },
   {
     path: '/quiz/questions',

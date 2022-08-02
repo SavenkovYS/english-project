@@ -9,25 +9,26 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  // const auth = useAuth();
-  // const publicPagesNames: RouteRecordName[] = [routesNames.login, routesNames.registration];
-  // const authPages: RouteRecordName[] = [routesNames.login, routesNames.registration];
-  // let isRoutePublic = false;
-  // let isRouteAuth = false;
-  // if (to.name) {
-  //   isRoutePublic = publicPagesNames.includes(to.name);
-  //   isRouteAuth = authPages.includes(to.name);
-  // }
-  // if (!auth.isLoggedIn && !isRoutePublic) {
-  //   await auth.checkAuth();
-  // }
-  //
-  // console.log('[auth.isLoggedIn]', auth.isLoggedIn);
-  // console.log('[isRouteAuth]', isRouteAuth);
-  //
-  // if (auth.isLoggedIn && isRouteAuth) {
-  //   next({ name: routesNames.quiz });
-  // }
+  const auth = useAuth();
+  const publicPagesNames: RouteRecordName[] = [routesNames.login, routesNames.registration];
+  const authPages: RouteRecordName[] = [routesNames.login, routesNames.registration];
+  let isRoutePublic = false;
+  let isRouteAuth = false;
+  if (to.name) {
+    isRoutePublic = publicPagesNames.includes(to.name);
+    isRouteAuth = authPages.includes(to.name);
+  }
+  if (!auth.isLoggedIn && !isRoutePublic) {
+    try {
+      await auth.checkAuth();
+    } catch {
+      await router.push({ name: routesNames.login });
+    }
+  }
+
+  if (auth.isLoggedIn && isRouteAuth) {
+    next({ name: routesNames.quiz });
+  }
   next();
 });
 

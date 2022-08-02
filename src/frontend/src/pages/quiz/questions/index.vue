@@ -19,6 +19,7 @@
         <quiz-result
           v-else
           :results="userResults"
+          @restart-quiz="restartQuiz"
         />
       </base-card>
     </section>
@@ -43,7 +44,7 @@ const questions: IQuestion[] = reactive([]);
 const areQuestionsLoading = ref(false);
 const currentQuestionIndex = ref(0);
 const loadingError = ref(null);
-const userResults: IQuizAnswer[] = reactive([]);
+const userResults: IQuizAnswer[] = ref([]);
 const showResults = ref(false);
 
 const questionNumber = computed(() => currentQuestionIndex.value + 1);
@@ -63,7 +64,7 @@ async function getQuestions() {
 }
 
 function goToNextQuestion(userAnswerValue: string) {
-  userResults.push({
+  userResults.value.push({
     question: currentQuestion.value,
     userAnswerValue,
   });
@@ -72,6 +73,13 @@ function goToNextQuestion(userAnswerValue: string) {
   } else {
     currentQuestionIndex.value += 1;
   }
+}
+
+async function restartQuiz() {
+  currentQuestionIndex.value = 0;
+  userResults.value = [] as IQuizAnswer[];
+  showResults.value = false;
+  await getQuestions();
 }
 
 onBeforeMount(() => {
