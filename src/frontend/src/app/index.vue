@@ -1,11 +1,13 @@
 <template>
   <div class="app">
     <Routing />
+    <base-modal />
   </div>
 </template>
 
 <script setup lang="ts">
 import { Routing } from '@/pages';
+import BaseModal from '@/shared/design/BaseModal.vue';
 </script>
 
 <style>

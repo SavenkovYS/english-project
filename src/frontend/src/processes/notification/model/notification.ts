@@ -1,16 +1,18 @@
 import { defineStore } from 'pinia';
 
-import { routesNames } from '@/pages/config';
-
 export const useNotification = defineStore('notification', {
   state: () => ({
-    showNotification: false,
+    shouldShowNotification: false,
     notificationText: null as null | string,
   }),
   actions: {
     showNotification(text: string) {
       this.notificationText = text;
-      this.showNotification = true;
+      this.shouldShowNotification = true;
+    },
+    hideNotification() {
+      this.notificationText = null;
+      this.shouldShowNotification = false;
     },
   },
 });
