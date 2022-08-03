@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { useAuth } from '@/processes/auth/model/auth';
+import { useRouter } from 'vue-router';
+import { routesNames } from '@/pages/config';
 
 export const API_URL = 'http://localhost:8000';
 
@@ -22,21 +23,18 @@ instance.interceptors.request.use(
 );
 
 instance.interceptors.response.use(
-  (config) => {
-    console.log(config);
-    return config;
-  },
+  (config) => config,
   async (error) => {
-    console.log(error);
     const originalRequest = error.config;
     if (error.response.status === 401 && error.config && !error.config.isRetry) {
+      const router = useRouter();
       originalRequest.isRetry = true;
       try {
-        const response = await axios.get(`${API_URL}/auth/refresh`, { withCredentials: true });
+        const response = await axios.get(`${API_URL}/user/refresh`, { withCredentials: true });
         localStorage.setItem('accessToken', response.data.accessToken);
         return instance.request(originalRequest);
-      } catch (responseError) {
-        console.log(responseError);
+      } catch {
+        await router.push({ name: routesNames.login });
       }
     }
     throw error;

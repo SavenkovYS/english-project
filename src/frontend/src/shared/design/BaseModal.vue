@@ -4,11 +4,13 @@
       class="modal__body"
       :style="computedStyles"
     >
-      <h2>I am modal title</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur doloremque exercitationem perspiciatis veniam voluptatem.
-        Aliquam consequatur eligendi fugiat illum ipsa magnam maiores nesciunt nihil nisi quam repudiandae similique tempore, vitae!
-      </p>
+      <h2 class="modal__title">
+        <slot name="title" />
+      </h2>
+      <slot />
+      <div class="modal__controls">
+        <slot name="controls" />
+      </div>
     </div>
   </div>
 </template>
@@ -45,6 +47,7 @@ const computedStyles = computed(() => ({
     }
 
     &__body {
+      margin-bottom: 300px;
       padding: 10px 20px;
 
       background-color: #fff;

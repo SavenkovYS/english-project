@@ -10,13 +10,7 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const auth = useAuth();
-  if (!auth.isLoggedIn) {
-    try {
-      await auth.checkAuth();
-    } catch (error) {
-      console.log(error);
-    }
-  }
+
   const publicPagesNames: RouteRecordName[] = [routesNames.login, routesNames.registration];
   const authPages: RouteRecordName[] = [routesNames.login, routesNames.registration];
   let isRoutePublic = false;
@@ -25,11 +19,13 @@ router.beforeEach(async (to, from, next) => {
     isRoutePublic = publicPagesNames.includes(to.name);
     isRouteAuth = authPages.includes(to.name);
   }
-  if (!auth.isLoggedIn && !isRoutePublic) {
+  if (!auth.isLoggedIn) {
     try {
       await auth.checkAuth();
     } catch {
-      await router.push({ name: routesNames.login });
+      if (!isRoutePublic) {
+        await router.push({ name: routesNames.login });
+      }
     }
   }
 
