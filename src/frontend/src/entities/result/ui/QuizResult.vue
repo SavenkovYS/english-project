@@ -1,21 +1,23 @@
 <template>
-  <h2 class="quiz-result__title">
-    Ваш результат - <span class="quiz-result__score">{{ rightAnswersNumber }}/{{ totalQuestionsNumber }}</span>
-  </h2>
-  <ul class="quiz-result__questions-list">
-    <quiz-result-item
-      v-for="result in results"
-      :key="result.question.id"
-      :result="result"
-    />
-  </ul>
-  <div class="quiz-result__controls">
-    <base-button
-      class="quiz-result__restart-button"
-      @click="restartQuiz"
-    >
-      Начать заново
-    </base-button>
+  <div>
+    <h2 class="quiz-result__title">
+      Ваш результат - <span class="quiz-result__score">{{ rightAnswersNumber }}/{{ totalQuestionsNumber }}</span>
+    </h2>
+    <ul class="quiz-result__questions-list">
+      <quiz-result-item
+        v-for="result in results"
+        :key="result.question.id"
+        :result="result"
+      />
+    </ul>
+    <div class="quiz-result__controls">
+      <base-button
+        class="quiz-result__restart-button"
+        @click="restartQuiz"
+      >
+        Начать заново
+      </base-button>
+    </div>
   </div>
 </template>
 
@@ -36,7 +38,7 @@ const totalQuestionsNumber = computed(() => results.length);
 
 const rightAnswersNumber = computed(() => results.filter((result: IQuizAnswer) => {
   const userAnswer = result.question.answers.find((answer) => String(answer.value) === result.userAnswerValue);
-  return userAnswer.right;
+  return userAnswer?.right;
 }).length);
 
 function restartQuiz() {

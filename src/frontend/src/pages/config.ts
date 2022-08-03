@@ -3,5 +3,6 @@ export enum routesNames {
     main = 'main',
     quiz = 'quiz',
     registration = 'registration',
-    questions = 'questions'
+    questions = 'questions',
+    tutors = 'tutors'
 }

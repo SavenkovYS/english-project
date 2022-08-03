@@ -10,6 +10,13 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const auth = useAuth();
+  if (!auth.isLoggedIn) {
+    try {
+      await auth.checkAuth();
+    } catch (error) {
+      console.log(error);
+    }
+  }
   const publicPagesNames: RouteRecordName[] = [routesNames.login, routesNames.registration];
   const authPages: RouteRecordName[] = [routesNames.login, routesNames.registration];
   let isRoutePublic = false;

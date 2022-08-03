@@ -31,7 +31,7 @@ import PageLayout from '@/widgets/layout/index.vue';
 import QuestionCard from '@/entities/question/ui/QuestionCard.vue';
 import QuizResult from '@/entities/result/ui/QuizResult.vue';
 import {
-  computed, onBeforeMount, reactive, ref,
+  computed, onBeforeMount, reactive, Ref, ref,
 } from 'vue';
 import { fetchQuestions } from '@/shared/api/question';
 import { getErrorMessage } from '@/shared/api/lib';
@@ -44,7 +44,7 @@ const questions: IQuestion[] = reactive([]);
 const areQuestionsLoading = ref(false);
 const currentQuestionIndex = ref(0);
 const loadingError = ref(null);
-const userResults: IQuizAnswer[] = ref([]);
+const userResults: Ref<IQuizAnswer[]> = ref([]);
 const showResults = ref(false);
 
 const questionNumber = computed(() => currentQuestionIndex.value + 1);

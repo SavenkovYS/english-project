@@ -17,6 +17,7 @@
         >
           <router-link
             class="page-header__navigation-link"
+            :class="{'page-header__navigation-link--active': isLinkActive(action)}"
             :to="{ name: action.link }"
           >
             {{ action.label }}
@@ -36,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { computed, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { useAuth } from '@/processes/auth/model/auth';
@@ -46,11 +47,20 @@ import BaseButton from '@/shared/design/BaseButton.vue';
 const auth = useAuth();
 const router = useRouter();
 
+const isLinkActive = computed(() => function (action: { id: number, label: string, link: string}) {
+  return router.currentRoute.value.fullPath.includes(action.link);
+});
+
 const actions = reactive([
   {
     id: 1,
     label: 'Викторина',
     link: routesNames.quiz,
+  },
+  {
+    id: 2,
+    label: 'Репетиторы',
+    link: routesNames.tutors,
   },
 ]);
 
@@ -82,10 +92,15 @@ async function logoutUser() {
   }
 
   &__navigation-list {
+    display: flex;
     margin: 0;
     padding: 0;
 
     list-style: none;
+  }
+
+  &__navigation-item:not(:last-child) {
+    margin-right: 15px;
   }
 
   &__logout-button,
@@ -100,6 +115,10 @@ async function logoutUser() {
   &__logout-button:hover,
   &__navigation-link:hover {
     color: rgba(255, 255, 255, 0.7)
+  }
+
+  &__navigation-link--active {
+    color: #f8cc36;
   }
 }
 </style>
