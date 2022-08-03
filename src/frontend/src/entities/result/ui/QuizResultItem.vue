@@ -45,12 +45,34 @@ const answerStyles = computed(() => (answer: any) => {
 
 <style lang="scss" scoped>
 .quiz-result-item {
-  &__answers-list {
-    margin-top: 10px;
+
+  &__question {
+    position: relative;
   }
 
   &__question:not(:last-child) {
-    margin-bottom: 15px;
+    padding-bottoM: 10px;
+  }
+
+  &__question:not(:last-child)::after {
+    content: '';
+
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 1px;
+
+    background-color: #333;
+  }
+
+  &__answers-list {
+    margin-top: 15px;
+  }
+
+  &__question:not(:last-child) {
+    margin-bottom: 20px;
   }
 
   &__answer:not(:last-child) {
