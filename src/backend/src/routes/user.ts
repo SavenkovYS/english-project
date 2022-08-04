@@ -10,7 +10,6 @@ router.post('/signup-user',
     userController.signupUser);
 router.post('/login', userController.login);
 router.post('/logout', userController.logout);
-// router.get('/activate/:link')
 router.get('/refresh', userController.refresh);
 
 export default router;

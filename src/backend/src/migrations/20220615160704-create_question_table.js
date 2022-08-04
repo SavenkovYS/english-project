@@ -11,13 +11,13 @@ module.exports = {
         primaryKey: true
       },
       body: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING()
       },
       answers: {
         type: DataTypes.JSON
       },
       description: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING(512)
       }
     })
   },
