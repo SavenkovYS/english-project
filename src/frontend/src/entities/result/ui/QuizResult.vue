@@ -54,12 +54,15 @@ function restartQuiz() {
 
   &__score {
     font-size: 24px;
-    color: blue;
+
+    text-decoration: underline;
   }
 
   &__questions-list {
     margin: 0;
     padding: 0;
+
+    font-size: 16px;
 
     list-style: none;
   }
@@ -67,6 +70,10 @@ function restartQuiz() {
   &__controls {
     display: flex;
     justify-content: flex-end;
+  }
+
+  &__restart-button {
+    font-size: 16px;
   }
 }
 </style>
