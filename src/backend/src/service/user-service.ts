@@ -1,7 +1,5 @@
 import User from "../models/user";
 import bcrypt from 'bcryptjs';
-// import uuid from 'uuid';
-// import * as mailService from './mail-service';
 import * as tokenService from './token-service';
 import {UserDto} from "../dtos/user-dto";
 import { ApiError } from "../helpers/api-error";
@@ -13,10 +11,7 @@ export async function signup(login: string, password: string) {
         throw ApiError.BadRequest('Пользователь с таким именем уже существует');
     }
     const hashedPassword = await bcrypt.hash(password, 3);
-    // const activationLink = uuid.v4();
     const user = await User.create({ login, password: hashedPassword });
-    // await mailService.sendActivationMail(email, activationLink)
-    // const user = await User.create({ login, password: hashedPassword, activationLink });
     const userDto = new UserDto(user);
     const tokens = tokenService.generateToken({ ...userDto });
     await tokenService.saveToken(userDto.id, tokens.refreshToken);

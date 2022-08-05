@@ -84,7 +84,9 @@ module.exports = {
                 },
                 {
                     body: 'They’re having lunch with his girlfriend’s parents, _____ live in Brighton.',
-                    description: '"...родители, которые живут ...".',
+                    description: '"...родители, которые живут ...". В английском языке слово "который" может переводиться несколькими способами: "who", "which", "that".' +
+                        '"Who" употребляется с одушевленными существительными и местоимениями, "which" - c неодушевленными, "that" - как с одушевленными, так и неодушевленными.' +
+                        'Но поскольку здесь придаточное предложение не является ключевым (non-defining relative clause), т.е. его можно опустить без потери смысла, слово that употребить нельзя.',
                     answers: JSON.stringify([
                         {
                             value: 1,
@@ -110,7 +112,7 @@ module.exports = {
                 },
                 {
                     body: 'I wasn\'t keen on the restaurant _____ we went to last weekend.',
-                    description: '"...родители, которые живут ...".',
+                    description: 'В предложениях с ключевым придаточным предложением (defining relative clause), т.е. его нельзя опустить, иначе предложение не будте иметь смысла, слово "который" (that) можно не писать',
                     answers: JSON.stringify([
                         {
                             value: 1,
@@ -136,7 +138,7 @@ module.exports = {
                 },
                 {
                     body: 'The gym _____ I go to work out is open twenty-four hours a day.',
-                    description: '"...родители, которые живут ...".',
+                    description: '"Тренажерный зал, куда я хожу заниматься...". Определение места, поэтому употребляем "where"',
                     answers: JSON.stringify([
                         {
                             value: 1,
@@ -162,7 +164,7 @@ module.exports = {
                 },
                 {
                     body: 'The neighbours _____ the music from your party. It was terribly loud. You should go and apologise to them.',
-                    description: '"...родители, которые живут ...".',
+                    description: '"Соседи ДОЛЖНО БЫТЬ услышали музыку...". То есть мы можем догадаться по некоторым признакам (It was terribly loud), что действие практически точно произошло',
                     answers: JSON.stringify([
                         {
                             value: 1,
@@ -188,7 +190,7 @@ module.exports = {
                 },
                 {
                     body: 'We _____ a serious accident when you drove through that red light!',
-                    description: '"...родители, которые живут ...".',
+                    description: '"Мы МОГЛИ БЫ попасть в серьезную аварию". Мы делаем предложение о событии в прошлом, которое не случилось (так как они не попали в аварию)',
                     answers: JSON.stringify([
                         {
                             value: 1,
@@ -214,7 +216,9 @@ module.exports = {
                 },
                 {
                     body: 'Do you ever regret _____ Canada and returning to your home country?',
-                    description: '"...родители, которые живут ...".',
+                    description: 'После "regret" глагол может употребляться как с to, так и с окончанием ing, но глагол будет иметь другое значение.' +
+                        'После regret употребляется ing, если мы говорим о действии, которое уже произошло и мы сожалеем об этом.' +
+                        'После regret идет to, то мы говорим, что сейчас мы сожалеем о действии, которое нам предстоит сделать сейчас или в будущем.',
                     answers: JSON.stringify([
                         {
                             value: 1,
@@ -240,7 +244,9 @@ module.exports = {
                 },
                 {
                     body: 'I’ll never _____ snow for the first time.',
-                    description: '"...родители, которые живут ...".',
+                    description: 'После "forget" глагол может употребляться как с to, так и с окончанием ing, но глагол будет иметь другое значение.' +
+                        'После forget употребляется ing, если мы выполнили какое-то действие, но не помним об этом' +
+                        'После forget идет to, мы хотим сказать, что забыли, что нужно выполнить какое-то действие',
                     answers: JSON.stringify([
                         {
                             value: 1,
@@ -266,7 +272,9 @@ module.exports = {
                 },
                 {
                     body: 'She finally stopped _____ when the price of cigarettes went up again.',
-                    description: '"...родители, которые живут ...".',
+                    description: 'После "stop" глагол может употребляться как с to, так и с окончанием ing, но глагол будет иметь другое значение.' +
+                        'После stop употребляется ing, если мы говорим о том, что прекратили что-то делать.' +
+                        'После stop идет to, то мы говорим, о том, что мы остановились, чтобы что-то сделать.',
                     answers: JSON.stringify([
                         {
                             value: 1,
@@ -292,7 +300,7 @@ module.exports = {
                 },
                 {
                     body: 'She went to the doctor because she keeps _____ headaches.',
-                    description: '"...родители, которые живут ...".',
+                    description: 'После "keeps" глагол употребляется с окночанием ing.',
                     answers: JSON.stringify([
                         {
                             value: 1,
@@ -318,7 +326,7 @@ module.exports = {
                 },
                 {
                     body: 'You’d _____ late for work again or you’ll get fired.',
-                    description: '"...родители, которые живут ...".',
+                    description: 'После конструкции had better глагол употреляется в начальной форме без to. Для отрицания перед глаголом ставится not.',
                     answers: JSON.stringify([
                         {
                             value: 1,
@@ -339,32 +347,6 @@ module.exports = {
                             value: 4,
                             label: 'better not being',
                             right: false
-                        }
-                    ])
-                },
-                {
-                    body: ' _____ a world class athlete is a lot harder than it looks.',
-                    description: '"...родители, которые живут ...".',
-                    answers: JSON.stringify([
-                        {
-                            value: 1,
-                            label: 'For being',
-                            right: false
-                        },
-                        {
-                            value: 2,
-                            label: 'To be',
-                            right: false
-                        },
-                        {
-                            value: 3,
-                            label: 'To being',
-                            right: false
-                        },
-                        {
-                            value: 4,
-                            label: 'Being',
-                            right: true
                         }
                     ])
                 },

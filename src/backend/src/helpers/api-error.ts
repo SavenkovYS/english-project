@@ -15,7 +15,6 @@ export class ApiError extends Error {
     }
 
     static BadRequest(message: string, errors: ValidationError[] = []) {
-        console.log('in api error')
         return new ApiError(400, message, errors);
     }
 }
