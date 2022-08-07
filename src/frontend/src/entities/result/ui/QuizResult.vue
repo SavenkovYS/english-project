@@ -30,7 +30,6 @@ import { computed } from 'vue';
 interface Props {
   results: IQuizAnswer[];
 }
-
 const { results } = defineProps<Props>();
 const emit = defineEmits<{(event: 'restart-quiz'): void}>();
 

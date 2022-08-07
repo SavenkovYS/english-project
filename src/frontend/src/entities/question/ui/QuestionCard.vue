@@ -32,15 +32,15 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+
 import BaseRadio from '@/shared/design/formElements/BaseRadio.vue';
 import { IQuestion } from '@/shared/api/question/model';
-import { ref } from 'vue';
 import BaseButton from '@/shared/design/BaseButton.vue';
 
 interface Props {
   question: IQuestion;
 }
-
 const { question } = defineProps<Props>();
 const emit = defineEmits<{(event: 'go-to-next-question', value: string): void}>();
 

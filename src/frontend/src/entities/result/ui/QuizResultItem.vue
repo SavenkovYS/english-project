@@ -27,7 +27,6 @@ import { computed } from 'vue';
 interface Props {
   result: IQuizAnswer
 }
-
 const { result } = defineProps<Props>();
 
 const answerStyles = computed(() => (answer: any) => {

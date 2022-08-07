@@ -1,4 +1,5 @@
-export enum routesNames {
+// eslint-disable-next-line no-shadow
+enum routesNames {
     login = 'login',
     main = 'main',
     quiz = 'quiz',
@@ -6,3 +7,5 @@ export enum routesNames {
     questions = 'questions',
     tutors = 'tutors'
 }
+
+export default routesNames;

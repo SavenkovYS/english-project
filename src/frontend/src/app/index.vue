@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import { Routing } from '@/pages';
 import BaseModal from '@/shared/design/BaseModal.vue';
-import { useNotification } from '@/processes/notification/model/notification';
+import useNotification from '@/processes/notification/model/notification';
 import { computed } from 'vue';
 
 const notification = useNotification();

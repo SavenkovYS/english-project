@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordName } from 'vue-router';
 import { routes } from '@/pages/index';
 import { useAuth } from '@/processes/auth/model/auth';
-import { routesNames } from '@/pages/config';
+import routesNames from '@/pages/config';
 
 const router = createRouter({
   history: createWebHistory(),

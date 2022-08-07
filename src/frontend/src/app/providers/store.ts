@@ -12,6 +12,7 @@ declare module 'pinia' {
 }
 
 pinia.use(({ store }) => {
+  // eslint-disable-next-line no-param-reassign
   store.router = markRaw(router);
 });
 

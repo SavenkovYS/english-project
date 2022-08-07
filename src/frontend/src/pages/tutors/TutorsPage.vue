@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import PageLayout from '@/widgets/layout/index.vue';
+import PageLayout from '@/widgets/layout/MainLayout.vue';
 
 </script>
 

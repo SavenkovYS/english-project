@@ -1,5 +1,5 @@
 import { RouteRecordRaw } from 'vue-router';
-import { routesNames } from './config';
+import routesNames from './config';
 import Routing from './index.vue';
 
 export const routes: Array<RouteRecordRaw> = [
@@ -11,27 +11,27 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     name: routesNames.login,
-    component: () => import('./login/index.vue'),
+    component: () => import('./login/LoginPage.vue'),
   },
   {
     path: '/quiz',
     name: routesNames.quiz,
-    component: () => import('./quiz/index.vue'),
+    component: () => import('./quiz/QuizPage.vue'),
   },
   {
     path: '/registration',
     name: routesNames.registration,
-    component: () => import('./registration/index.vue'),
+    component: () => import('./registration/RegistrationPage.vue'),
   },
   {
     path: '/quiz/questions',
     name: routesNames.questions,
-    component: () => import('./quiz/questions/index.vue'),
+    component: () => import('./quiz/questions/QuestionsPage.vue'),
   },
   {
     path: '/tutors',
     name: routesNames.tutors,
-    component: () => import('./tutors/index.vue'),
+    component: () => import('./tutors/TutorsPage.vue'),
   },
 ];
 

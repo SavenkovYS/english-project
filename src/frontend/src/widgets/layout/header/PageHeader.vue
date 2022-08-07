@@ -41,7 +41,7 @@ import { computed, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { useAuth } from '@/processes/auth/model/auth';
-import { routesNames } from '@/pages/config';
+import routesNames from '@/pages/config';
 import BaseButton from '@/shared/design/BaseButton.vue';
 
 const auth = useAuth();

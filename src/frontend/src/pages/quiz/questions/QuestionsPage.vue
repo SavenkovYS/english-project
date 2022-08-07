@@ -27,12 +27,13 @@
 </template>
 
 <script setup lang="ts">
-import PageLayout from '@/widgets/layout/index.vue';
-import QuestionCard from '@/entities/question/ui/QuestionCard.vue';
-import QuizResult from '@/entities/result/ui/QuizResult.vue';
 import {
   computed, onBeforeMount, reactive, Ref, ref,
 } from 'vue';
+
+import PageLayout from '@/widgets/layout/MainLayout.vue';
+import QuestionCard from '@/entities/question/ui/QuestionCard.vue';
+import QuizResult from '@/entities/result/ui/QuizResult.vue';
 import { fetchQuestions } from '@/shared/api/question';
 import { getErrorMessage } from '@/shared/api/lib';
 import BaseCard from '@/shared/design/BaseCard.vue';

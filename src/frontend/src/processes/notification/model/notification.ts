@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 
-export const useNotification = defineStore('notification', {
+const useNotification = defineStore('notification', {
   state: () => ({
     shouldShowNotification: false,
     notificationText: null as null | string,
@@ -16,3 +16,5 @@ export const useNotification = defineStore('notification', {
     },
   },
 });
+
+export default useNotification;

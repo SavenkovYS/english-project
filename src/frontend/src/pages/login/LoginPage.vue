@@ -1,33 +1,33 @@
 <template>
   <page-layout>
-    <section class="registration">
+    <section class="login">
       <base-card
-        class="registration__card"
+        class="login__card"
         width="450px"
         padding="0"
       >
-        <header class="registration__header">
-          <h1 class="registration__title">
-            Регистрация
+        <header class="login__header">
+          <h1 class="login__title">
+            Вход
           </h1>
         </header>
         <div
           v-if="errorMessage"
-          class="registration__error-block"
+          class="login__error-block"
         >
-          <p class="registration__error">
+          <p class="login__error">
             {{ errorMessage }}
           </p>
         </div>
         <form
-          class="registration__form"
-          @submit.prevent="registerUser"
+          class="login__form"
+          @submit.prevent="tryLogin"
         >
           <base-text-input
             :id="formConfig.userName.id"
             v-model="formConfig.userName.value"
             input-size="100%"
-            class="registration__field"
+            class="login__field"
             placeholder="Логин"
             :name="formConfig.userName.name"
             :type="formConfig.userName.type"
@@ -39,7 +39,7 @@
             :id="formConfig.password.id"
             v-model="formConfig.password.value"
             input-size="100%"
-            class="registration__field"
+            class="login__field"
             placeholder="Пароль"
             :name="formConfig.password.name"
             :type="formConfig.password.type"
@@ -47,26 +47,26 @@
             :submitted="submitted"
             @set-field-validity="formConfig.password.isValid = $event"
           />
-          <div class="registration__login-link-container">
-            <span>Уже есть аккаунт?</span>
+          <div class="login__registration-link-container">
+            <span>Нет аккаунта?</span>
             <router-link
-              class="registration__login-link"
-              :to="{ name: routesNames.login }"
+              class="login__registration-link"
+              :to="{ name: routesNames.registration }"
             >
-              Войти
+              Зарегистрироваться
             </router-link>
           </div>
-          <div class="registration__controls">
+          <div class="login__controls">
             <base-button
-              class="registration__submit-button"
+              class="login__submit-button"
               type="submit"
               variant="primary"
               :disabled="isFetching"
             >
-              <span>Зарегистрироваться</span>
+              <span>Войти</span>
               <loading-spinner
                 v-if="isFetching"
-                class="registration__submit-spinner"
+                class="login__submit-spinner"
                 :size="14"
                 color="#fff"
               />
@@ -81,17 +81,17 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
 import { AxiosError } from 'axios';
+import { useRouter } from 'vue-router';
 
-import { routesNames } from '@/pages/config';
+import routesNames from '@/pages/config';
 import { useAuth } from '@/processes/auth/model/auth';
 
 import { getErrorMessage } from '@/shared/api/lib';
 import BaseButton from '@/shared/design/BaseButton.vue';
 import BaseCard from '@/shared/design/BaseCard.vue';
 import BaseTextInput from '@/shared/design/formElements/BaseTextInput.vue';
-import PageLayout from '@/widgets/layout/index.vue';
-import { useRouter } from 'vue-router';
 import LoadingSpinner from '@/shared/design/UI/LoadingSpinner.vue';
+import PageLayout from '@/widgets/layout/MainLayout.vue';
 
 const auth = useAuth();
 const router = useRouter();
@@ -139,7 +139,7 @@ function checkFormValidity() {
   return Object.values(formConfig).every((field) => field.isValid);
 }
 
-async function registerUser() {
+async function tryLogin() {
   submitted.value = true;
 
   if (!checkFormValidity()) {
@@ -149,7 +149,7 @@ async function registerUser() {
   isFetching.value = true;
 
   try {
-    await auth.registerUser({ login: formConfig.userName.value, password: formConfig.password.value });
+    await auth.login({ login: formConfig.userName.value, password: formConfig.password.value });
     await router.push({ name: routesNames.quiz });
   } catch (error) {
     if (error instanceof AxiosError) {
@@ -163,89 +163,84 @@ async function registerUser() {
 </script>
 
 <style lang="scss">
-.registration {
-    padding-top: 100px;
+.login {
+  padding-top: 100px;
 
-    &__header {
-         padding: 20px;
+  &__header {
+    padding: 20px;
 
-         color: #fff;
-         text-align: center;
+    color: #fff;
+    text-align: center;
 
-         border-bottom: 1px solid #4CAF50;
-         background-color: #4CAF50;
-    }
+    border-bottom: 1px solid #4CAF50;
+    background-color: #4CAF50;
+  }
 
-    &__error-block {
-      padding: 0 10px;
-    }
+  &__error-block {
+    padding: 0 10px;
+  }
 
-    &__error {
-      padding: 10px;
-      margin-bottom: 0;
+  &__error {
+    padding: 10px;
+    margin-bottom: 0;
 
-      color: #fff;
+    color: #fff;
 
-      background-color: rgb(223, 26, 26);
-      border-radius: 3px;
-    }
+    background-color: rgb(223, 26, 26);
+    border-radius: 3px;
+  }
 
-    &__title {
-         font-size: 1.5rem;
-         font-weight: 400;
-         letter-spacing: 1px;
-         margin: 0;
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin: 0;
 
-         text-transform: uppercase;
-    }
+    text-transform: uppercase;
+  }
 
-    &__form {
-         padding: 20px;
-    }
+  &__form {
+    padding: 20px;
+  }
 
-    &__controls {
-        display: flex;
-        justify-content: center;
-    }
+  &__controls {
+    display: flex;
+    justify-content: flex-end;
+  }
 
-    &__login-link-container {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 10px;
-    }
+  &__registration-link-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
 
-    &__login-link {
-      margin-left: 5px;
+  &__registration-link {
+    margin-left: 5px;
 
-      color: rgb(59, 68, 246);
-      text-decoration: none;
-    }
+    color: rgb(59, 68, 246);
+    text-decoration: none;
+  }
 
-    &__login-link:hover,
-    &__login-link:focus {
-      color: rgba(59, 68, 246, 0.8);
-    }
+  &__registration-link:hover,
+  &__registration-link:focus {
+    color: rgba(59, 68, 246, 0.8);
+  }
 
-    &__login-link:active {
-      color: rgba(59, 68, 246, 0.5);
-    }
+  &__registration-link:active {
+    color: rgba(59, 68, 246, 0.5);
+  }
 
-    &__submit-button {
-      width: 100%;
-    }
+  &__field:not(:last-child) {
+    margin-bottom: 10px;
+  }
 
-    &__field:not(:last-child) {
-         margin-bottom: 10px;
-    }
+  &__submit-button {
+    display: flex;
+    align-items: center;
+  }
 
-    &__submit-button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    &__submit-spinner {
-      margin-left: 4px;
-    }
+  &__submit-spinner {
+    margin-left: 4px;
+  }
 }
 </style>

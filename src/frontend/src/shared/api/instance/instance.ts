@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-import { routesNames } from '@/pages/config';
+import routesNames from '@/pages/config';
 
 export const API_URL = 'http://localhost:8000';
 
@@ -16,6 +16,7 @@ const instance = axios.create({
 instance.interceptors.request.use(
   (config) => {
     if (config.headers) {
+      // eslint-disable-next-line no-param-reassign
       config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`;
     }
     return config;

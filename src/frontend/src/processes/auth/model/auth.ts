@@ -2,11 +2,9 @@ import { defineStore } from 'pinia';
 
 import { IUser, IAuthProps } from '@/shared/api/auth/model';
 import { logoutUser, registerUser, tryLogin } from '@/shared/api/auth';
-import { routesNames } from '@/pages/config';
+import routesNames from '@/pages/config';
 import axios from 'axios';
 import { API_URL } from '@/shared/api/instance/instance';
-
-export const NAMESPACE = 'auth';
 
 export const useAuth = defineStore('auth', {
   state: () => ({

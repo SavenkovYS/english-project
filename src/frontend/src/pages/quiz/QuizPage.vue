@@ -28,11 +28,11 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { routesNames } from '@/pages/config';
+import routesNames from '@/pages/config';
 
-import PageLayout from '@/widgets/layout/index.vue';
 import BaseCard from '@/shared/design/BaseCard.vue';
 import BaseButton from '@/shared/design/BaseButton.vue';
+import PageLayout from '@/widgets/layout/MainLayout.vue';
 
 const router = useRouter();
 
